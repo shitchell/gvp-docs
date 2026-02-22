@@ -8,6 +8,7 @@ A structured framework for capturing and applying decision-making principles acr
 gvp-docs/
 ├── README.md              # This file
 ├── schema.yaml            # Field definitions and validation rules for all item types
+├── universal.yaml         # Organization-wide GVP (highest priority, UV/UP/UH/UR IDs)
 ├── personal.yaml          # Cross-project values, principles, heuristics, rules
 ├── tags.yaml              # Tag registry with descriptions
 ├── projects/
@@ -32,6 +33,16 @@ gvp-docs/
 | **Implementation Rules (IR)** | Project | High | Hard stops contingent on design choices. If the design choice changes, the rule may not apply. |
 | **Coding Principles (C)** | Project | Medium-High | Guidelines for writing code in a specific implementation. Change with the tech stack. |
 | **Constraints (CON)** | Project | High | Facts about the system we don't control but must work within. Descriptive, not prescriptive. |
+
+### Priority
+
+When items conflict, higher-priority sources win:
+
+1. **`universal.yaml`** — organization-wide (IDs prefixed `U`: UV, UP, UH, UR)
+2. **`personal.yaml`** — individual cross-project (IDs: V, P, H, R)
+3. **`projects/<project>.yaml`** — project-specific (IDs: G, M, D, CON, IR, C)
+
+For personal use, `universal.yaml` can remain empty. For organizational use, it captures items that apply across all teams and projects.
 
 ### Relationships
 

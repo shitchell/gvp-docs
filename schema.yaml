@@ -57,7 +57,15 @@ provenance:
         description: What changed and why
 
 
-# --- Personal GVP items (personal.yaml) ---
+# --- Universal and Personal GVP items (universal.yaml / personal.yaml) ---
+#
+# universal.yaml and personal.yaml share the same item schemas.
+# The only differences:
+#   - Universal IDs are prefixed with "U" (UV1, UP1, UH1, UR1)
+#   - Personal IDs use standard prefixes (V1, P1, H1, R1)
+#   - Universal items take priority over personal items in conflicts
+#
+# Priority order: universal > personal > project
 
 personal_items:
 
