@@ -93,7 +93,7 @@ After accumulating planning docs across sessions/projects, review the "inferred 
 
 - **Principles without heuristics** are fine — not everything has enough data points to formalize a decision procedure yet
 - **Heuristics should acknowledge their context** — if inferred from code decisions, note that; generalize as evidence accumulates from other domains
-- **Each item carries origin metadata** — which project, which decisions, what date. This enables tracing back to the original reasoning and comparing contexts when items conflict
+- **Each item carries origin and update history** — `origin` records where an item was first inferred (project, decisions, date, evidence). `updated_by` records subsequent modifications with the same schema plus a `rationale` field explaining what changed and why. This enables tracing the full evolution of an item across projects and sessions.
 - **IDs are stable** — never reuse a retired ID
 
 ## Usage
