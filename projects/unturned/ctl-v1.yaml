@@ -97,8 +97,7 @@ implementation_rules:
       serialize(parse(f)) must produce bytes identical to the original
       file for any valid input. This is tested for every parser with
       both synthetic and real server files.
-    depends_on: [ctl-v1:D3]
-    maps_to: [unturned:G2, personal:V7, personal:P5]
+    maps_to: [ctl-v1:D3, unturned:G2, personal:V7, personal:P5]
     tags: [code, correctness]
 
   - id: IR2
@@ -107,8 +106,7 @@ implementation_rules:
       parse() and serialize() must be pure functions of their input.
       No resolver, no catalog, no network access, no config. External
       dependencies belong in the editor layer.
-    depends_on: [ctl-v1:D3, ctl-v1:D4]
-    maps_to: [personal:P5, personal:V6]
+    maps_to: [ctl-v1:D3, ctl-v1:D4, personal:P5, personal:V6]
     tags: [code, maintainability]
 
   - id: IR3
@@ -118,6 +116,5 @@ implementation_rules:
       and CLI commands do not touch it directly. This ensures the merge
       boundary is clean — swapping the catalog backing only affects one
       layer.
-    depends_on: [ctl-v1:D4, ctl-v1:D5]
-    maps_to: [unturned:G3, personal:P1, personal:V6]
+    maps_to: [ctl-v1:D4, ctl-v1:D5, unturned:G3, personal:P1, personal:V6]
     tags: [code, maintainability]

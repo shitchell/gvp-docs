@@ -53,7 +53,7 @@ milestones:
   - id: M1
     name: inspect command shipped
     progress: complete
-    advances: [unturned:G1, unturned:G2]
+    maps_to: [unturned:G1, unturned:G2]
     description: >
       Parser registry, 4 parsers (inventory, clothing, player position,
       text-dat), item resolver, and inspect CLI command. All tests
@@ -62,7 +62,7 @@ milestones:
   - id: M2
     name: edit command shipped
     progress: in-progress
-    advances: [unturned:G1, unturned:G2, unturned:G3]
+    maps_to: [unturned:G1, unturned:G2, unturned:G3]
     description: >
       Round-trip binary editing via JSON. Serialization on parsers,
       editor layer with normalize/validate, generic Catalog[T], edit
@@ -71,7 +71,7 @@ milestones:
   - id: M3
     name: unturned-data merge
     progress: planned
-    advances: [unturned:G3]
+    maps_to: [unturned:G3]
     description: >
       Merge unturned-data models and pipeline into unturned-ctl.
       Swap ItemInfo for BundleEntry. Delete bridge types. Unified CLI.

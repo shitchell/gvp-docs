@@ -210,10 +210,6 @@ item_types:
         type: list[string]
         required: true
         description: IDs of values this principle serves (e.g., [V1, V3])
-      heuristics:
-        type: list[string]
-        required: false
-        description: IDs of heuristics that operationalize this principle
 
   heuristic:
     description: >
@@ -260,7 +256,7 @@ item_types:
         type: string
         required: true
         description: "One of: planned, in-progress, complete"
-      advances:
+      maps_to:
         type: list[string]
         required: true
         description: Goal IDs this milestone advances
@@ -299,14 +295,10 @@ item_types:
       statement:
         type: string
         required: true
-      depends_on:
-        type: list[string]
-        required: true
-        description: Design choice IDs this rule depends on
       maps_to:
         type: list[string]
         required: true
-        description: Goal + value/principle IDs this rule enforces
+        description: Design choice + goal + value/principle IDs this rule relates to
 
   coding_principle:
     description: >

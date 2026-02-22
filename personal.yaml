@@ -139,7 +139,6 @@ principles:
       changes need only happen in one contiguous block of code.
     tags: [maintainability, code, systems]
     maps_to: [personal:V2, personal:V6]
-    heuristics: [personal:H2]
     origin:
       - project: unturned-ctl
         decisions: [2, 6, 11]
@@ -163,7 +162,6 @@ principles:
       planning, defer it.
     tags: [pragmatism, systems]
     maps_to: [personal:V4, personal:V6]
-    heuristics: []
     origin:
       - project: unturned-ctl
         decisions: [7]
@@ -185,7 +183,6 @@ principles:
       appealing API shape.
     tags: [code, systems, pragmatism]
     maps_to: [personal:V3, personal:V6]
-    heuristics: [personal:H6]
     origin:
       - project: unturned-ctl
         decisions: [12]
@@ -204,7 +201,6 @@ principles:
       abstraction leaks.
     tags: [extensibility, correctness, code, systems]
     maps_to: [personal:V6, personal:V7]
-    heuristics: [personal:H1]
     origin:
       - project: unturned-ctl
         decisions: [1]
@@ -225,7 +221,6 @@ principles:
       into distinct layers.
     tags: [maintainability, correctness, systems]
     maps_to: [personal:V6, personal:V7]
-    heuristics: [personal:H5]
     origin:
       - project: unturned-ctl
         decisions: [9, 10]
@@ -245,7 +240,6 @@ principles:
       transparency. As constraints lift, expand toward the ideal.
     tags: [transparency, usability, pragmatism]
     maps_to: [personal:V1, personal:V5]
-    heuristics: [personal:H3]
     origin:
       - project: unturned-ctl
         decisions: [3, 5]
