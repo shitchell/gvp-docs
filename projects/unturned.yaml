@@ -1,0 +1,210 @@
+# Unturned Project GVP
+#
+# Project-specific items: goals, milestones, design choices, constraints,
+# implementation rules, and coding principles for the unturned-ctl /
+# unturned-data / eventual unified "unturned" project.
+#
+# References personal.yaml items by ID (e.g., V1, P1, H2).
+#
+# ID scheme:
+#   G = Goal, M = Milestone, D = Design Choice, CON = Constraint,
+#   IR = Implementation Rule, C = Coding Principle
+
+goals:
+
+  - id: G1
+    name: Manage Unturned dedicated servers from the command line
+    statement: >
+      A unified CLI tool for server administration: start/stop, config
+      management, player data inspection and editing, backup, and
+      inventory operations.
+
+  - id: G2
+    name: Enable confident modification of player data
+    statement: >
+      Operators can inspect and edit binary player files (inventory,
+      clothing, position) with full visibility into what they're
+      changing and confidence that the round-trip is lossless.
+
+  - id: G3
+    name: Unify unturned-data and unturned-ctl into a single tool
+    statement: >
+      Eventually merge the data export pipeline (unturned-data) and
+      the server management tool (unturned-ctl) into one "unturned"
+      CLI with shared models and infrastructure. The merge should be
+      as effortless as possible.
+
+
+milestones:
+
+  - id: M1
+    name: inspect command shipped
+    status: complete
+    advances: [G1, G2]
+    description: >
+      Parser registry, 4 parsers (inventory, clothing, player position,
+      text-dat), item resolver, and inspect CLI command. All tests
+      passing.
+
+  - id: M2
+    name: edit command shipped
+    status: in-progress
+    advances: [G1, G2, G3]
+    description: >
+      Round-trip binary editing via JSON. Serialization on parsers,
+      editor layer with normalize/validate, generic Catalog[T], edit
+      CLI command. Design approved, implementation plan written.
+
+  - id: M3
+    name: unturned-data merge
+    status: planned
+    advances: [G3]
+    description: >
+      Merge unturned-data models and pipeline into unturned-ctl.
+      Swap ItemInfo for BundleEntry. Delete bridge types. Unified CLI.
+
+
+design_choices:
+
+  - id: D1
+    name: Python 3.11+ stdlib only (until merge)
+    rationale: >
+      Keeps unturned-ctl dependency-free. Pydantic arrives with the
+      unturned-data merge, not before.
+    maps_to: [G3, V3]
+    tags: [code]
+
+  - id: D2
+    name: Parser registry with BaseParser ABC
+    rationale: >
+      Self-contained parsers with priority-based auto-discovery.
+      Matches unturned-data's TYPE_REGISTRY / PROPERTIES_REGISTRY
+      pattern for merge compatibility.
+    maps_to: [G1, G3, P1]
+    tags: [code, extensibility]
+
+  - id: D3
+    name: serialize() as method on BaseParser
+    rationale: >
+      Co-locates format knowledge for maintainability. Pure inverse of
+      parse() — no external dependencies, testable round-trip
+      invariant.
+    maps_to: [G2, P1, P5, V6]
+    tags: [code, maintainability]
+
+  - id: D4
+    name: Separate editor layer (core/editors/)
+    rationale: >
+      Domain intelligence (name resolution, defaults, grid packing)
+      separated from format I/O (parsers) and CLI orchestration
+      (commands). Editors are the merge boundary — the only layer that
+      touches the catalog.
+    maps_to: [G2, G3, P5, V6]
+    tags: [code, maintainability]
+
+  - id: D5
+    name: Generic Catalog[T] with ItemInfo bridge type
+    rationale: >
+      One generic lookup class parameterized by entry type. Scoped at
+      construction, not subclassed. ItemInfo is a transient stdlib
+      dataclass deleted on merge day when BundleEntry takes its place.
+    maps_to: [G3, P1, V2]
+    tags: [code, extensibility, maintainability]
+
+  - id: D6
+    name: Full-replace editing semantics
+    rationale: >
+      User sees full JSON in editor, what they save is what gets
+      written. No hidden merge logic. Smart defaults (normalize) apply
+      only to new/incomplete entries.
+    maps_to: [G2, V1, V3]
+    tags: [ux, transparency]
+
+  - id: D7
+    name: Editor fallback chain ($VISUAL -> $EDITOR -> editor -> vi -> nano)
+    rationale: >
+      Follows Unix conventions. Includes Debian update-alternatives.
+      Zero configuration required on standard systems.
+    maps_to: [V5, H4]
+    tags: [cli, usability]
+
+  - id: D8
+    name: Opt-in backup delegating to existing system
+    rationale: >
+      --backup/--no-backup flags, configurable default, delegates to
+      existing hardlink-based backup infrastructure.
+    maps_to: [V4, H2]
+    tags: [cli, composability]
+
+
+constraints:
+
+  - id: CON1
+    name: Binary formats are reverse-engineered
+    impact: >
+      Inventory.dat, Clothing.dat, and Player.dat formats come from
+      decompiled C# (Unturned-Datamining). Specs may be incomplete.
+      Round-trip tests against real server files are critical.
+
+  - id: CON2
+    name: Numeric IDs collide across categories
+    impact: >
+      Items, vehicles, and objects share the same numeric ID space.
+      Item lookups must be scoped to the Items/ bundle subdirectory.
+      GUIDs are globally unique and don't need scoping.
+
+  - id: CON3
+    name: Workshop mods have varying directory layouts
+    impact: >
+      Workshop content under Steam/content/304930/<mod_id>/ has no
+      standard internal layout. Bundle scanning must use rglob to
+      find Items/ subdirectories at any depth.
+
+  - id: CON4
+    name: GUIDs use .NET mixed-endian format
+    impact: >
+      Clothing.dat stores GUIDs as 16 bytes in .NET's mixed-endian
+      byte order (bytes_le). Must use uuid.UUID(bytes_le=...) for
+      parsing and .bytes_le for serialization.
+
+  - id: CON5
+    name: Item grid dimensions are external metadata
+    impact: >
+      Size_X and Size_Y for inventory grid packing are stored in
+      each item's bundle .dat file, not in Inventory.dat itself.
+      Auto-placement requires catalog access to look up dimensions.
+
+
+implementation_rules:
+
+  - id: IR1
+    name: Round-trip invariant must hold
+    statement: >
+      For every parser that implements serialize(),
+      serialize(parse(f)) must produce bytes identical to the original
+      file for any valid input. This is tested for every parser with
+      both synthetic and real server files.
+    depends_on: [D3]
+    maps_to: [G2, V7, P5]
+    tags: [code, correctness]
+
+  - id: IR2
+    name: Parsers must not depend on external services
+    statement: >
+      parse() and serialize() must be pure functions of their input.
+      No resolver, no catalog, no network access, no config. External
+      dependencies belong in the editor layer.
+    depends_on: [D3, D4]
+    maps_to: [P5, V6]
+    tags: [code, maintainability]
+
+  - id: IR3
+    name: Editor layer is the sole catalog consumer
+    statement: >
+      Only code in core/editors/ may import or use the Catalog. Parsers
+      and CLI commands do not touch it directly. This ensures the merge
+      boundary is clean — swapping the catalog backing only affects one
+      layer.
+    depends_on: [D4, D5]
+    maps_to: [G3, P1, V6]
+    tags: [code, maintainability]

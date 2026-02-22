@@ -1,0 +1,406 @@
+# Personal GVP — Values, Principles, Heuristics, Rules
+#
+# Source of truth for cross-project decision-making framework.
+# Use the `gvp` utility to render, validate, and query.
+#
+# ID scheme:
+#   V = Value, P = Principle, H = Heuristic, R = Rule
+#   IDs are stable — never reuse a retired ID.
+
+values:
+
+  - id: V1
+    name: Transparency
+    statement: >
+      State, behavior, and decisions should be visible and inspectable.
+      When someone is operating on state, they should see the full state.
+      When something breaks, the system provides enough information to
+      diagnose the failure without reproducing it. Decisions are traceable
+      to goals.
+    tags: [transparency]
+    origin:
+      - project: unturned-ctl
+        decisions: [3, 5]
+        date: 2026-02-22
+        evidence: >
+          Chose full-replace over merge semantics so users see exactly what
+          gets written. Chose cheap-but-visible validation over hidden
+          strictness.
+
+  - id: V2
+    name: DRY
+    statement: >
+      Write once, use everywhere. Duplication of logic, patterns, or
+      structure is a maintenance liability. When the same logic appears
+      in multiple places, a future change risks inconsistency.
+    tags: [maintainability]
+    origin:
+      - project: unturned-ctl
+        decisions: [2, 6, 11]
+        date: 2026-02-22
+        evidence: >
+          User explicitly stated: "i love DRY." Chose generic Catalog[T]
+          over N specialized catalogs. Delegated backup to existing system.
+
+  - id: V3
+    name: Simplicity
+    statement: >
+      Easy to understand. Explicit is better than implicit. Fewer
+      abstractions, fewer layers, fewer special cases. Complexity is
+      acceptable only when it serves a concrete need.
+    tags: [usability, maintainability]
+    origin:
+      - project: unturned-ctl
+        decisions: [3, 5, 12]
+        date: 2026-02-22
+        evidence: >
+          Full-replace over merge (no hidden behavior). Cheap validation
+          over strict (don't gold-plate). Catalog queries over
+          item-as-object (simpler model for the use case).
+
+  - id: V4
+    name: Composability
+    statement: >
+      Build on and combine existing pieces rather than reinventing.
+      Prefer extending what exists over building parallel systems.
+      Small, focused components that combine freely are more valuable
+      than monolithic ones.
+    tags: [composability, maintainability]
+    origin:
+      - project: unturned-ctl
+        decisions: [6, 7]
+        date: 2026-02-22
+        evidence: >
+          Delegated backup to existing hardlink system. Extended
+          ItemResolver minimally rather than rebuilding from scratch.
+
+  - id: V5
+    name: Just Works
+    statement: >
+      Systems should work correctly out of the box with zero
+      configuration. Respect platform conventions and environment
+      defaults. Users should only need to configure things when they
+      want to deviate from the sensible default.
+    tags: [usability]
+    origin:
+      - project: unturned-ctl
+        decisions: [4, 8]
+        date: 2026-02-22
+        evidence: >
+          User stated: "i like a Just Works philosophy for end-users or
+          devs using an API." Added update-alternatives to editor fallback
+          so Debian users don't need to set env vars. Interactive
+          disambiguation by default.
+
+  - id: V6
+    name: Maintainability
+    statement: >
+      Systems should be easy to modify, extend, and debug over time.
+      Today's choices should not make tomorrow's work harder. Reduce
+      the future cost of change.
+    tags: [maintainability]
+    origin:
+      - project: unturned-ctl
+        decisions: [2, 7, 9, 10]
+        date: 2026-02-22
+        evidence: >
+          Co-located serialize() with parse() for maintainability.
+          Chose balanced approach to merge planning. Separated editor
+          layer so parsers are merge-stable.
+
+  - id: V7
+    name: Correctness through evidence
+    statement: >
+      Confidence comes from evidence, not assertion. Distinguish
+      observation from inference. Testable invariants are preferred
+      over untestable claims.
+    tags: [correctness, transparency]
+    origin:
+      - project: unturned-ctl
+        decisions: [9, 10]
+        date: 2026-02-22
+        evidence: >
+          The round-trip invariant serialize(parse(f)) == f was
+          explicitly chosen as the core correctness property because
+          it's mechanically verifiable.
+
+
+principles:
+
+  - id: P1
+    name: One Contiguous Block
+    statement: >
+      Related logic that changes together should live together,
+      provided co-location would not violate other principles,
+      heuristics, or best practices. If we know future changes are
+      coming or a category of change will be frequent, design so those
+      changes need only happen in one contiguous block of code.
+    tags: [maintainability, code, systems]
+    maps_to: [V2, V6]
+    heuristics: [H2]
+    origin:
+      - project: unturned-ctl
+        decisions: [2, 6, 11]
+        date: 2026-02-22
+        evidence: >
+          User stated: "i love DRY and a sort of One-Contiguous-Block
+          principle -- if we know future changes are coming or especially
+          some category of change will be frequent, we should design
+          around the idea that (as much as possible and can be achieved
+          without gross violations of best practice) those changes need
+          only happen in one contiguous block of code."
+
+  - id: P2
+    name: Minimize total cost across phases
+    statement: >
+      When facing a build-now vs build-for-later trade-off, find the
+      option that minimizes total cost across both phases. Don't
+      optimize for either phase in isolation. If a clean seam costs
+      little now and saves significant refactoring later, take it. If
+      building the future architecture now demands disproportionate
+      planning, defer it.
+    tags: [pragmatism, systems]
+    maps_to: [V4, V6]
+    heuristics: []
+    origin:
+      - project: unturned-ctl
+        decisions: [7]
+        date: 2026-02-22
+        evidence: >
+          User stated: "this just seemed like the happy balance to me
+          between time-cost now, simplicity/bug-risk now, and future
+          merge complexity."
+        note: >
+          Principle only, no heuristic yet. One data point; may evolve
+          into a heuristic as more planning docs provide examples.
+
+  - id: P3
+    name: Match the pattern to the access pattern
+    statement: >
+      Before adopting a design pattern, enumerate the actual access
+      patterns in the current use case. Adopt the pattern that matches
+      how the data is actually accessed, not the one with the most
+      appealing API shape.
+    tags: [code, systems, pragmatism]
+    maps_to: [V3, V6]
+    heuristics: [H7]
+    origin:
+      - project: unturned-ctl
+        decisions: [12]
+        date: 2026-02-22
+        evidence: >
+          User stated: "just because i think the API i described sounds
+          cool and possibly nifty/useful doesn't make it the best for
+          our use-cases."
+
+  - id: P4
+    name: Validate through breadth
+    statement: >
+      When building a system intended for genericization or
+      extensibility, implement multiple contrasting concrete cases
+      simultaneously. A single implementation cannot reveal where the
+      abstraction leaks.
+    tags: [extensibility, correctness, code, systems]
+    maps_to: [V6, V7]
+    heuristics: [H1]
+    origin:
+      - project: unturned-ctl
+        decisions: [1]
+        date: 2026-02-22
+        evidence: >
+          User stated: "doing multiple -- even just 2 -- helps force
+          better genericization and ensure we set it up in a way that
+          will be flexible and catch places where we fall short of that
+          goal, which in turn facilitates future extension."
+
+  - id: P5
+    name: Separate responsibilities at invariant boundaries
+    statement: >
+      When a unit of work requires an external dependency to fulfill
+      its contract, evaluate whether it is performing multiple
+      responsibilities. If isolating one responsibility would yield a
+      testable invariant that the dependency would break, separate them
+      into distinct layers.
+    tags: [maintainability, correctness, systems]
+    maps_to: [V6, V7]
+    heuristics: [H6]
+    origin:
+      - project: unturned-ctl
+        decisions: [9, 10]
+        date: 2026-02-22
+        evidence: >
+          serialize() shouldn't need a resolver because
+          serialize(parse(f)) == f is a testable invariant that a
+          resolver would break. The domain logic was extracted into a
+          separate editor layer.
+
+  - id: P6
+    name: Transparent ownership under constraints
+    statement: >
+      The ideal is comprehensive validation that prevents user error.
+      When comprehensive validation is not feasible for a given phase,
+      validate what is free and let the user own the rest with full
+      transparency. As constraints lift, expand toward the ideal.
+    tags: [transparency, usability, pragmatism]
+    maps_to: [V1, V5]
+    heuristics: [H3]
+    origin:
+      - project: unturned-ctl
+        decisions: [3, 5]
+        date: 2026-02-22
+        evidence: >
+          User stated: "if it's easy, validate, else just trust the
+          user... if they add bad data that won't load in-game, that's
+          a them problem." On comprehensive validation: "i do want a
+          TUI which provides live warnings/errors so that the user
+          *doesn't* break things, and ideally that would be
+          comprehensive. the only reason for not doing that now is
+          time-cost."
+
+
+heuristics:
+
+  - id: H1
+    name: Breadth test for generics
+    statement: >
+      If building a system intended for genericization or extensibility
+      across multiple formats, categories, or types, then implement at
+      least 2 contrasting concrete cases simultaneously. A single
+      implementation can't reveal where the abstraction leaks —
+      contrasting data shapes force the generic boundaries into the
+      right place.
+    tags: [extensibility, correctness, code, systems]
+    maps_to: [P4]
+    origin:
+      - project: unturned-ctl
+        decisions: [1]
+        date: 2026-02-22
+
+  - id: H2
+    name: One Contiguous Block application
+    statement: >
+      If related logic changes together (modifying behavior X requires
+      understanding both A and B), and co-locating that logic would not
+      violate other principles, heuristics, or best practices, then
+      co-locate it. The test: could someone make a valid change to this
+      behavior by editing one contiguous block of code?
+
+      Corollary: before building a new capability, check if an existing
+      system already does it (or mostly does it). If it covers the core
+      need, then delegate or extend. If it covers less than half the
+      need, then build from scratch. If somewhere in between, evaluate
+      whether extension is clean or would distort the existing system.
+    tags: [maintainability, composability, code, systems]
+    maps_to: [P1, V2, V4]
+    origin:
+      - project: unturned-ctl
+        decisions: [2, 6, 11]
+        date: 2026-02-22
+
+  - id: H3
+    name: Constrained validation
+    statement: >
+      If comprehensive validation is not feasible for this phase (time,
+      planning, complexity), then validate what you get for free
+      (reusing computation already being performed) and let the user
+      own the rest with full transparency. "For free" means the check
+      reuses data or logic that already exists for another purpose.
+
+      If the user can see the full state, then do not silently
+      preserve, merge, or override data behind the scenes.
+
+      When the constraint lifts (e.g., TUI with live feedback), expand
+      toward the ideal. The heuristic naturally guides toward more
+      comprehensive validation as "feasible" expands.
+    tags: [transparency, pragmatism, usability]
+    maps_to: [P6, V1, V5]
+    origin:
+      - project: unturned-ctl
+        decisions: [3, 5]
+        date: 2026-02-22
+
+  - id: H4
+    name: Just Works with explicit overrides
+    statement: >
+      If the system can discover the right behavior from the
+      environment (platform conventions, existing config, standard
+      defaults), then do that — require zero configuration from the
+      user. If users need control over that behavior, then provide
+      explicit overrides (flags, config).
+
+      If a tool supports both interactive and automated use, then
+      default to the interactive behavior (more helpful for humans) and
+      provide an explicit opt-out for automation (e.g.,
+      --non-interactive).
+    tags: [usability, cli]
+    maps_to: [V5]
+    origin:
+      - project: unturned-ctl
+        decisions: [4, 8]
+        date: 2026-02-22
+
+  - id: H6
+    name: Invariant-based separation
+    statement: >
+      If a unit of work requires an external dependency to fulfill its
+      contract, then evaluate whether it is performing multiple
+      responsibilities. If isolating one responsibility would yield a
+      testable invariant (e.g., f(g(x)) == x) that the dependency
+      would break, then separate them into distinct layers.
+
+      In code specifically: if a function needs a service, resolver, or
+      catalog to do its job, and that dependency prevents a clean
+      round-trip invariant or makes the function untestable in
+      isolation, then extract the service-dependent logic into its own
+      layer.
+    tags: [maintainability, correctness, code, systems]
+    maps_to: [P5, V6, V7]
+    origin:
+      - project: unturned-ctl
+        decisions: [9, 10]
+        date: 2026-02-22
+        note: >
+          The code-specific version is included because this heuristic
+          was inferred from a code decision. The general form
+          ("invariant-based separation") may apply to non-code systems
+          but needs additional evidence before claiming generality.
+
+  - id: H7
+    name: Access pattern matching
+    statement: >
+      If choosing between design patterns for a component, then list
+      the actual access patterns in the current use case. If every use
+      case is a query/lookup, then use a query interface. If every use
+      case is behavior on an instance, then use objects with methods.
+      Do not adopt a pattern because it has an appealing API shape —
+      adopt it because it matches how the data is actually accessed.
+
+      If a pattern fits a future use case but not the current one, then
+      note it for later rather than introducing coupling now.
+    tags: [code, pragmatism]
+    maps_to: [P3, V3]
+    origin:
+      - project: unturned-ctl
+        decisions: [12]
+        date: 2026-02-22
+
+
+rules:
+
+  - id: R1
+    name: Verbatim rationale only
+    statement: >
+      When capturing decision rationale, use direct verbatim quotes.
+      Never infer, assume, or paraphrase rationale. If verbatim
+      rationale is not available, ask for it. Misattributed or
+      misinterpreted rationale can derail future planning.
+    tags: [correctness, transparency]
+    maps_to: [V1, V7]
+    origin:
+      - project: unturned-ctl
+        decisions: []
+        date: 2026-02-22
+        evidence: >
+          User corrected a paraphrased quote during PLANNING.md review
+          and clarified: "if you don't have verbatim to add, please
+          ask!"

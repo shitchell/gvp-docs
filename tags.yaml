@@ -1,0 +1,30 @@
+# Tag Registry
+# Tags classify GVP items along two dimensions: domain and concern.
+# Items can have multiple tags. Generic/cross-domain items may have
+# only concern tags and no domain tags.
+
+domains:
+  code:
+    description: Software development decisions
+  systems:
+    description: Any system with interacting components (software, organizational, mechanical)
+  cli:
+    description: Command-line interface and terminal tool design
+  ux:
+    description: End-user experience decisions (any interface, not just GUI)
+
+concerns:
+  maintainability:
+    description: Reducing the future cost of change
+  transparency:
+    description: Making state, behavior, and decisions visible and inspectable
+  composability:
+    description: Building on and combining existing pieces rather than reinventing
+  pragmatism:
+    description: Balancing ideals against real-world constraints (time, complexity, risk)
+  extensibility:
+    description: Designing so future capabilities can be added without rearchitecting
+  correctness:
+    description: Ensuring systems behave as specified and produce verifiable results
+  usability:
+    description: Minimizing friction for end-users and consumers of APIs
