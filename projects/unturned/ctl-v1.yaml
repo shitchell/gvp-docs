@@ -22,7 +22,7 @@ design_choices:
     rationale: >
       Keeps unturned-ctl dependency-free. Pydantic arrives with the
       unturned-data merge, not before.
-    maps_to: [G3, V3]
+    maps_to: [unturned:G3, personal:V3]
     tags: [code]
 
   - id: D2
@@ -31,7 +31,7 @@ design_choices:
       Self-contained parsers with priority-based auto-discovery.
       Matches unturned-data's TYPE_REGISTRY / PROPERTIES_REGISTRY
       pattern for merge compatibility.
-    maps_to: [G1, G3, P1]
+    maps_to: [unturned:G1, unturned:G3, personal:P1]
     tags: [code, extensibility]
 
   - id: D3
@@ -40,7 +40,7 @@ design_choices:
       Co-locates format knowledge for maintainability. Pure inverse of
       parse() — no external dependencies, testable round-trip
       invariant.
-    maps_to: [G2, P1, P5, V6]
+    maps_to: [unturned:G2, personal:P1, personal:P5, personal:V6]
     tags: [code, maintainability]
 
   - id: D4
@@ -50,7 +50,7 @@ design_choices:
       separated from format I/O (parsers) and CLI orchestration
       (commands). Editors are the merge boundary — the only layer that
       touches the catalog.
-    maps_to: [G2, G3, P5, V6]
+    maps_to: [unturned:G2, unturned:G3, personal:P5, personal:V6]
     tags: [code, maintainability]
 
   - id: D5
@@ -59,7 +59,7 @@ design_choices:
       One generic lookup class parameterized by entry type. Scoped at
       construction, not subclassed. ItemInfo is a transient stdlib
       dataclass deleted on merge day when BundleEntry takes its place.
-    maps_to: [G3, P1, V2]
+    maps_to: [unturned:G3, personal:P1, personal:V2]
     tags: [code, extensibility, maintainability]
 
   - id: D6
@@ -68,7 +68,7 @@ design_choices:
       User sees full JSON in editor, what they save is what gets
       written. No hidden merge logic. Smart defaults (normalize) apply
       only to new/incomplete entries.
-    maps_to: [G2, V1, V3]
+    maps_to: [unturned:G2, personal:V1, personal:V3]
     tags: [ux, transparency]
 
   - id: D7
@@ -76,7 +76,7 @@ design_choices:
     rationale: >
       Follows Unix conventions. Includes Debian update-alternatives.
       Zero configuration required on standard systems.
-    maps_to: [V5, H4]
+    maps_to: [personal:V5, personal:H4]
     tags: [cli, usability]
 
   - id: D8
@@ -84,7 +84,7 @@ design_choices:
     rationale: >
       --backup/--no-backup flags, configurable default, delegates to
       existing hardlink-based backup infrastructure.
-    maps_to: [V4, H2]
+    maps_to: [personal:V4, personal:H2]
     tags: [cli, composability]
 
 
@@ -97,8 +97,8 @@ implementation_rules:
       serialize(parse(f)) must produce bytes identical to the original
       file for any valid input. This is tested for every parser with
       both synthetic and real server files.
-    depends_on: [D3]
-    maps_to: [G2, V7, P5]
+    depends_on: [ctl-v1:D3]
+    maps_to: [unturned:G2, personal:V7, personal:P5]
     tags: [code, correctness]
 
   - id: IR2
@@ -107,8 +107,8 @@ implementation_rules:
       parse() and serialize() must be pure functions of their input.
       No resolver, no catalog, no network access, no config. External
       dependencies belong in the editor layer.
-    depends_on: [D3, D4]
-    maps_to: [P5, V6]
+    depends_on: [ctl-v1:D3, ctl-v1:D4]
+    maps_to: [personal:P5, personal:V6]
     tags: [code, maintainability]
 
   - id: IR3
@@ -118,6 +118,6 @@ implementation_rules:
       and CLI commands do not touch it directly. This ensures the merge
       boundary is clean — swapping the catalog backing only affects one
       layer.
-    depends_on: [D4, D5]
-    maps_to: [G3, P1, V6]
+    depends_on: [ctl-v1:D4, ctl-v1:D5]
+    maps_to: [unturned:G3, personal:P1, personal:V6]
     tags: [code, maintainability]
