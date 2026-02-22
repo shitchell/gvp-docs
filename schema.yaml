@@ -148,6 +148,25 @@ provenance:
         required: true
         description: What changed and why
 
+  reviewed_by:
+    description: >
+      Review acknowledgments. Records when an element was last confirmed
+      as still accurate after upstream changes. Used by the staleness
+      warning (W006) to detect elements that may need re-evaluation.
+    schema:
+      date:
+        type: date
+        required: true
+        description: ISO date of the review
+      by:
+        type: string
+        required: false
+        description: Who performed the review
+      note:
+        type: string
+        required: false
+        description: Review notes or observations
+
 
 # --- Common Fields ---
 #
