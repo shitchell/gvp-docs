@@ -7,6 +7,7 @@ A structured framework for capturing and applying decision-making principles acr
 ```
 gvp-docs/
 ├── README.md              # This file
+├── schema.yaml            # Field definitions and validation rules for all item types
 ├── personal.yaml          # Cross-project values, principles, heuristics, rules
 ├── tags.yaml              # Tag registry with descriptions
 ├── projects/
@@ -93,7 +94,7 @@ After accumulating planning docs across sessions/projects, review the "inferred 
 
 - **Principles without heuristics** are fine — not everything has enough data points to formalize a decision procedure yet
 - **Heuristics should acknowledge their context** — if inferred from code decisions, note that; generalize as evidence accumulates from other domains
-- **Each item carries origin and update history** — `origin` records where an item was first inferred (project, decisions, date, evidence). `updated_by` records subsequent modifications with the same schema plus a `rationale` field explaining what changed and why. This enables tracing the full evolution of an item across projects and sessions.
+- **Each item carries origin and update history** — `origin` records where an item was first inferred; `updated_by` records subsequent modifications with a `rationale` field explaining what changed and why. See [`schema.yaml`](schema.yaml) for full field definitions.
 - **IDs are stable** — never reuse a retired ID
 
 ## Usage

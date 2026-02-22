@@ -2,22 +2,11 @@
 #
 # Source of truth for cross-project decision-making framework.
 # Use the `gvp` utility to render, validate, and query.
+# See schema.yaml for field definitions and validation rules.
 #
 # ID scheme:
 #   V = Value, P = Principle, H = Heuristic, R = Rule
 #   IDs are stable — never reuse a retired ID.
-#
-# Provenance fields:
-#   origin:      Where this item was first inferred.
-#   updated_by:  Subsequent modifications (same schema as origin + rationale).
-#
-# Schema for origin / updated_by entries:
-#   - project:    Project name (e.g., "unturned-ctl")
-#     decisions:  List of decision numbers from that project's PLANNING.md
-#     date:       ISO date of the session
-#     evidence:   Verbatim quotes or factual observations supporting the item
-#     note:       Optional context (origin only)
-#     rationale:  What changed and why (updated_by only)
 
 values:
 
