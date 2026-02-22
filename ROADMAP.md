@@ -30,3 +30,36 @@ This is backwards-compatible — existing simple references still work.
 A `relationship_types.yaml` file defining valid edge labels, similar
 to how `tags.yaml` defines valid tags. Would enable validation that
 typed mappings use known relationship types.
+
+
+## Chain Review Validation
+
+**Status:** Planned (design immediately after gvp utility v1 implementation)
+
+When an element is updated (`updated_by` with a timestamp), all
+descendants in the mapping graph may need review — the change could
+invalidate downstream decisions. Add:
+
+1. `updated_by.timestamp` — already exists as `date`, may need finer granularity
+2. `reviewed` field on elements — schema TBD, at minimum `{timestamp}`,
+   potentially also `{notes, user, comments}`
+3. Validation rule: if any element in a chain has an `updated_by` timestamp
+   newer than a descendant's latest `reviewed` timestamp (or if the
+   descendant lacks a `reviewed` entry), emit a warning prompting review
+
+This ensures changes propagate human attention through the graph.
+
+
+## Investigate TASV-Playwright GVP Document
+
+**Status:** Planned (immediately after gvp utility v1 implementation)
+
+Review `~/GOALS_VALUES_PRINCIPLES-tasv-playwright.md` against the gvp-docs
+schema and the gvp utility. This is the original document where the GVP
+framework began formalization. Key areas to investigate:
+
+- Validation rules (e.g., "design choices must map to 1 value and 1 goal")
+  that should be ported into `gvp validate`
+- Any elements, relationships, or structural patterns not yet captured
+  in gvp-docs
+- Alignment between the original framing and the current schema
