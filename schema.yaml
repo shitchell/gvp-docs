@@ -184,6 +184,10 @@ provenance:
 # All item types can appear at any scope. The categories below define
 # the type-specific fields beyond the common fields listed above. ID
 # prefixes are scope-dependent (set via meta.id_prefix or by convention).
+#
+# Traceability rule: every element (except goals, values, constraints)
+# must map to >= 1 goal AND >= 1 value. Shortcuts exist for certain
+# categories — see the `gvp` utility docs for the full rule table.
 
 item_types:
 
@@ -259,7 +263,7 @@ item_types:
       maps_to:
         type: list[string]
         required: true
-        description: Goal IDs this milestone advances
+        description: Goal + value IDs this milestone advances
       description:
         type: string
         required: true

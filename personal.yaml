@@ -138,7 +138,7 @@ principles:
       coming or a category of change will be frequent, design so those
       changes need only happen in one contiguous block of code.
     tags: [maintainability, code, systems]
-    maps_to: [personal:V2, personal:V6]
+    maps_to: [unturned:G1, unturned:G3, personal:V2, personal:V6]
     origin:
       - project: unturned-ctl
         decisions: [2, 6, 11]
@@ -161,7 +161,7 @@ principles:
       building the future architecture now demands disproportionate
       planning, defer it.
     tags: [pragmatism, systems]
-    maps_to: [personal:V4, personal:V6]
+    maps_to: [unturned:G3, personal:V4, personal:V6]
     origin:
       - project: unturned-ctl
         decisions: [7]
@@ -182,7 +182,7 @@ principles:
       how the data is actually accessed, not the one with the most
       appealing API shape.
     tags: [code, systems, pragmatism]
-    maps_to: [personal:V3, personal:V6]
+    maps_to: [unturned:G1, personal:V3, personal:V6]
     origin:
       - project: unturned-ctl
         decisions: [12]
@@ -200,7 +200,7 @@ principles:
       simultaneously. A single implementation cannot reveal where the
       abstraction leaks.
     tags: [extensibility, correctness, code, systems]
-    maps_to: [personal:V6, personal:V7]
+    maps_to: [unturned:G1, personal:V6, personal:V7]
     origin:
       - project: unturned-ctl
         decisions: [1]
@@ -220,7 +220,7 @@ principles:
       testable invariant that the dependency would break, separate them
       into distinct layers.
     tags: [maintainability, correctness, systems]
-    maps_to: [personal:V6, personal:V7]
+    maps_to: [unturned:G2, personal:V6, personal:V7]
     origin:
       - project: unturned-ctl
         decisions: [9, 10]
@@ -239,7 +239,7 @@ principles:
       validate what is free and let the user own the rest with full
       transparency. As constraints lift, expand toward the ideal.
     tags: [transparency, usability, pragmatism]
-    maps_to: [personal:V1, personal:V5]
+    maps_to: [unturned:G2, personal:V1, personal:V5]
     origin:
       - project: unturned-ctl
         decisions: [3, 5]
@@ -329,7 +329,7 @@ heuristics:
       provide an explicit opt-out for automation (e.g.,
       --non-interactive).
     tags: [usability, cli]
-    maps_to: [personal:V5]
+    maps_to: [unturned:G1, personal:V5]
     origin:
       - project: unturned-ctl
         decisions: [4, 8]
@@ -391,7 +391,7 @@ rules:
       rationale is not available, ask for it. Misattributed or
       misinterpreted rationale can derail future planning.
     tags: [correctness, transparency]
-    maps_to: [personal:V1, personal:V7]
+    maps_to: [unturned:G2, personal:V1, personal:V7]
     origin:
       - project: unturned-ctl
         decisions: []

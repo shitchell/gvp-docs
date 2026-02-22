@@ -31,7 +31,7 @@ design_choices:
       Self-contained parsers with priority-based auto-discovery.
       Matches unturned-data's TYPE_REGISTRY / PROPERTIES_REGISTRY
       pattern for merge compatibility.
-    maps_to: [unturned:G1, unturned:G3, personal:P1]
+    maps_to: [unturned:G1, unturned:G3, personal:P1, personal:V4]
     tags: [code, extensibility]
 
   - id: D3
@@ -76,7 +76,7 @@ design_choices:
     rationale: >
       Follows Unix conventions. Includes Debian update-alternatives.
       Zero configuration required on standard systems.
-    maps_to: [personal:V5, personal:H4]
+    maps_to: [unturned:G1, personal:V5, personal:H4]
     tags: [cli, usability]
 
   - id: D8
@@ -84,7 +84,7 @@ design_choices:
     rationale: >
       --backup/--no-backup flags, configurable default, delegates to
       existing hardlink-based backup infrastructure.
-    maps_to: [personal:V4, personal:H2]
+    maps_to: [unturned:G1, personal:V4, personal:H2]
     tags: [cli, composability]
 
 
