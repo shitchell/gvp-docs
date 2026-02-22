@@ -1,19 +1,16 @@
 # Universal GVP — Organization-Wide Values, Principles, Heuristics, Rules
 #
-# Highest-priority items. These override personal and project-level items
-# when conflicts arise. See schema.yaml for field definitions.
-#
-# ID scheme:
-#   UV = Universal Value, UP = Universal Principle,
-#   UH = Universal Heuristic, UR = Universal Rule
-#   IDs are stable — never reuse a retired ID.
-#
-# Priority order (highest to lowest):
-#   universal.yaml > personal.yaml > projects/<project>.yaml
+# Root of the inheritance chain. No parent. All other scopes inherit
+# from this (directly or transitively). See schema.yaml for field
+# definitions and inheritance rules.
 #
 # For personal use, this file can remain empty. For organizational use,
-# it captures values, principles, heuristics, and rules that apply
-# across all teams and projects within the organization.
+# it captures items that apply across all teams and projects.
+
+meta:
+  name: universal
+  scope: universal
+  id_prefix: "U"
 
 values: []
 

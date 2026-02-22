@@ -1,7 +1,98 @@
 # GVP Schema
 #
-# Defines the structure of all GVP items. Used by the `gvp` utility
-# for validation and by humans for reference.
+# Defines the structure of all GVP items and files. Used by the `gvp`
+# utility for validation and by humans for reference.
+
+
+# --- File Metadata ---
+#
+# Every GVP YAML file starts with a `meta` block that declares its
+# identity and position in the inheritance chain.
+
+meta:
+  description: >
+    File-level metadata. Declares the file's identity and its parent
+    in the priority chain. Priority flows from root to leaf: parent
+    wins on conflict, child extends (adds items that don't exist at
+    the parent level). Items in a child scope supplement but must not
+    contradict items in a parent scope.
+  fields:
+    name:
+      type: string
+      required: true
+      description: Human-readable name for this scope (e.g., "personal", "unturned", "ctl-v1")
+    inherits:
+      type: string
+      required: false
+      description: >
+        File path (relative to repo root) or well-known name of the
+        parent scope. Omit for root scopes (e.g., universal.yaml).
+        Examples: "universal", "personal", "projects/unturned"
+    scope:
+      type: string
+      required: false
+      description: >
+        Human-readable label for what this scope represents. Not
+        enforced by the utility — purely for documentation. Common
+        values: "universal", "personal", "project", "implementation",
+        "feature". Users define their own granularity.
+    id_prefix:
+      type: string
+      required: false
+      description: >
+        Prefix for IDs in this file (e.g., "U" for universal). When
+        set, all item IDs in this file should use this prefix. Allows
+        disambiguation when items from multiple scopes are displayed
+        together.
+    defaults:
+      type: map
+      required: false
+      description: >
+        Default field values applied to every item in this file. Any
+        field that appears on an item type can be set here (e.g.,
+        origin, tags). Items that explicitly set a field override the
+        default for that field entirely (no merging). The utility
+        resolves defaults at load time. A field marked "required" in
+        the schema is satisfied if provided by either the item or the
+        defaults.
+
+  # Conventional root scopes (not enforced, just documented):
+  #
+  #   universal.yaml    — organization-wide, highest priority
+  #     └─ personal.yaml  — individual cross-project
+  #          └─ projects/<project>.yaml  — project-level
+  #               └─ projects/<project>/<impl>.yaml  — implementation-level
+  #                    └─ ...  — arbitrary further nesting
+  #
+  # The nesting depth is user-defined. The utility resolves the full
+  # chain via `inherits` references.
+
+
+# --- Inheritance Rules ---
+
+inheritance:
+  description: >
+    How items interact across scopes in the inheritance chain.
+  rules:
+    conflict_resolution: >
+      Parent wins. If a child scope defines an item that contradicts
+      a parent item (e.g., a child principle that violates a parent
+      rule), the parent takes priority. The `gvp validate` command
+      flags these conflicts.
+    extension: >
+      Child extends. A child scope can add items that don't exist at
+      the parent level (new goals, design choices, constraints, etc.).
+      These items can reference parent-scope IDs in their maps_to
+      fields.
+    available_categories: >
+      Any category can appear at any scope. Values, principles,
+      heuristics, and rules are common at universal/personal scopes.
+      Goals, milestones, design choices, constraints, implementation
+      rules, and coding principles are common at project/implementation
+      scopes. But this is convention, not enforcement — a project
+      could define project-specific values, and a personal scope could
+      define personal milestones.
+
 
 # --- Provenance ---
 
@@ -33,7 +124,8 @@ provenance:
   updated_by:
     description: >
       Subsequent modifications. Same schema as origin with the addition
-      of a rationale field.
+      of a rationale field. Also used to record the rationale when an
+      item's status changes to deprecated or rejected.
     schema:
       project:
         type: string
@@ -57,69 +149,63 @@ provenance:
         description: What changed and why
 
 
-# --- Universal and Personal GVP items (universal.yaml / personal.yaml) ---
+# --- Common Fields ---
 #
-# universal.yaml and personal.yaml share the same item schemas.
-# The only differences:
-#   - Universal IDs are prefixed with "U" (UV1, UP1, UH1, UR1)
-#   - Personal IDs use standard prefixes (V1, P1, H1, R1)
-#   - Universal items take priority over personal items in conflicts
+# The following fields appear on ALL item types. They are listed here
+# once for reference; each item type below includes them implicitly.
 #
-# Priority order: universal > personal > project
+#   id:         Stable identifier. Auto-assigned by the `gvp` utility.
+#               Sequential per category per file, no gaps. Never reused
+#               — deprecated/rejected items keep their ID forever.
+#               (type: string, required: true)
+#
+#   name:       Short, descriptive name.
+#               (type: string, required: true)
+#
+#   status:     Item lifecycle state. One of: active, deprecated, rejected.
+#               Defaults to "active" (can be omitted). When changing to
+#               deprecated or rejected, add an updated_by entry with a
+#               rationale explaining why.
+#               (type: string, required: false, default: "active")
+#
+#   tags:       Tags from tags.yaml (domain and/or concern).
+#               (type: list[string], required: false)
+#
+#   origin:     Where this item was first inferred. Can be provided per
+#               item or via meta.defaults.
+#               (type: list[provenance.origin], required: false)
+#
+#   updated_by: Subsequent modifications.
+#               (type: list[provenance.updated_by], required: false)
 
-personal_items:
+
+# --- Item Types ---
+#
+# All item types can appear at any scope. The categories below define
+# the type-specific fields beyond the common fields listed above. ID
+# prefixes are scope-dependent (set via meta.id_prefix or by convention).
+
+item_types:
 
   value:
     description: >
       Semantic descriptors that shape trade-offs. The thumb on the scale
       when two valid approaches exist.
     fields:
-      id:
-        type: string
-        required: true
-        description: "Stable identifier. Format: V<number> (e.g., V1)"
-      name:
-        type: string
-        required: true
-        description: Short, descriptive name
       statement:
         type: string
         required: true
         description: What this value means and how it shapes decisions
-      tags:
-        type: list[string]
-        required: true
-        description: Tags from tags.yaml (domain and/or concern)
-      origin:
-        type: list[provenance.origin]
-        required: true
-        description: Where this item was first inferred
-      updated_by:
-        type: list[provenance.updated_by]
-        required: false
-        description: Subsequent modifications
 
   principle:
     description: >
       Less fuzzy than a value, more flexible than a rule. States a
       preference that requires judgment to apply.
     fields:
-      id:
-        type: string
-        required: true
-        description: "Stable identifier. Format: P<number>"
-      name:
-        type: string
-        required: true
-        description: Short, descriptive name
       statement:
         type: string
         required: true
         description: The preference or bias being stated
-      tags:
-        type: list[string]
-        required: true
-        description: Tags from tags.yaml
       maps_to:
         type: list[string]
         required: true
@@ -128,93 +214,40 @@ personal_items:
         type: list[string]
         required: false
         description: IDs of heuristics that operationalize this principle
-      origin:
-        type: list[provenance.origin]
-        required: true
-      updated_by:
-        type: list[provenance.updated_by]
-        required: false
 
   heuristic:
     description: >
       Well-defined if/then decision trees. Where a principle says
       "prefer X," a heuristic says "if A, then B; else C."
     fields:
-      id:
-        type: string
-        required: true
-        description: "Stable identifier. Format: H<number>"
-      name:
-        type: string
-        required: true
-        description: Short, descriptive name
       statement:
         type: string
         required: true
         description: The if/then decision procedure
-      tags:
-        type: list[string]
-        required: true
-        description: Tags from tags.yaml
       maps_to:
         type: list[string]
         required: true
         description: IDs of principles/values this heuristic operationalizes
-      origin:
-        type: list[provenance.origin]
-        required: true
-      updated_by:
-        type: list[provenance.updated_by]
-        required: false
 
   rule:
     description: >
       Hard stops. Binary, no exceptions. A rule is a principle that
       graduated to "never cross this line."
     fields:
-      id:
-        type: string
-        required: true
-        description: "Stable identifier. Format: R<number>"
-      name:
-        type: string
-        required: true
-        description: Short, descriptive name
       statement:
         type: string
         required: true
         description: The hard stop being defined
-      tags:
-        type: list[string]
-        required: true
-        description: Tags from tags.yaml
       maps_to:
         type: list[string]
         required: true
         description: IDs of values/principles this rule enforces
-      origin:
-        type: list[provenance.origin]
-        required: true
-      updated_by:
-        type: list[provenance.updated_by]
-        required: false
-
-
-# --- Project-specific items (<project>.yaml) ---
-
-project_items:
 
   goal:
     description: >
-      Ideal states we're working toward. Project-shape-agnostic.
+      Ideal states we're working toward. Would remain true if we
+      rewrote everything tomorrow.
     fields:
-      id:
-        type: string
-        required: true
-        description: "Stable identifier. Format: G<number>"
-      name:
-        type: string
-        required: true
       statement:
         type: string
         required: true
@@ -223,14 +256,7 @@ project_items:
     description: >
       Concrete, achievable waypoints on the path to goals.
     fields:
-      id:
-        type: string
-        required: true
-        description: "Stable identifier. Format: M<number>"
-      name:
-        type: string
-        required: true
-      status:
+      progress:
         type: string
         required: true
         description: "One of: planned, in-progress, complete"
@@ -247,13 +273,6 @@ project_items:
       Frameworks, infrastructure, architecture. Specific to an
       implementation. Changes when the implementation changes.
     fields:
-      id:
-        type: string
-        required: true
-        description: "Stable identifier. Format: D<number>"
-      name:
-        type: string
-        required: true
       rationale:
         type: string
         required: true
@@ -261,22 +280,12 @@ project_items:
         type: list[string]
         required: true
         description: Goal + value/principle IDs this choice serves
-      tags:
-        type: list[string]
-        required: true
 
   constraint:
     description: >
       Facts about the system we don't control. Descriptive, not
       prescriptive.
     fields:
-      id:
-        type: string
-        required: true
-        description: "Stable identifier. Format: CON<number>"
-      name:
-        type: string
-        required: true
       impact:
         type: string
         required: true
@@ -287,13 +296,6 @@ project_items:
       Hard stops contingent on design choices. If the design choice
       changes, the rule may not apply.
     fields:
-      id:
-        type: string
-        required: true
-        description: "Stable identifier. Format: IR<number>"
-      name:
-        type: string
-        required: true
       statement:
         type: string
         required: true
@@ -305,22 +307,12 @@ project_items:
         type: list[string]
         required: true
         description: Goal + value/principle IDs this rule enforces
-      tags:
-        type: list[string]
-        required: true
 
   coding_principle:
     description: >
       Guidelines for writing code in a specific implementation.
       Change with the tech stack.
     fields:
-      id:
-        type: string
-        required: true
-        description: "Stable identifier. Format: C<number>"
-      name:
-        type: string
-        required: true
       statement:
         type: string
         required: true
@@ -328,9 +320,6 @@ project_items:
         type: list[string]
         required: true
         description: Principle/design choice + value IDs
-      tags:
-        type: list[string]
-        required: true
 
 
 # --- Tags (tags.yaml) ---

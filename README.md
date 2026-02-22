@@ -7,13 +7,14 @@ A structured framework for capturing and applying decision-making principles acr
 ```
 gvp-docs/
 ├── README.md              # This file
-├── schema.yaml            # Field definitions and validation rules for all item types
-├── universal.yaml         # Organization-wide GVP (highest priority, UV/UP/UH/UR IDs)
+├── schema.yaml            # Field definitions, inheritance rules, validation
+├── universal.yaml         # Organization-wide GVP (highest priority, U-prefixed IDs)
 ├── personal.yaml          # Cross-project values, principles, heuristics, rules
 ├── tags.yaml              # Tag registry with descriptions
 ├── projects/
-│   └── <project>.yaml     # Project-specific: goals, milestones, design choices,
-│                          #   constraints, implementation rules, coding principles
+│   └── <project>.yaml             # Project-level: goals, milestones, constraints
+│       └── <implementation>.yaml  # Implementation-level: design choices, impl rules
+│           └── ...                # Arbitrary further nesting
 └── generated/             # Output from gvp utility
 ```
 
@@ -29,20 +30,28 @@ gvp-docs/
 | **Rules (R)** | Personal/Project | High | Hard stops. Binary, no exceptions. A rule is a principle that graduated to "never cross this line." |
 | **Principles (P)** | Personal | Medium | Less fuzzy than a value, more flexible than a rule. States a preference that requires judgment to apply. |
 | **Heuristics (H)** | Personal | High | Well-defined if/then decision trees. Where a principle says "prefer X," a heuristic says "if A, then B; else C." |
-| **Design Choices (D)** | Project | High | Frameworks, infrastructure, architecture. Specific to an implementation. |
-| **Implementation Rules (IR)** | Project | High | Hard stops contingent on design choices. If the design choice changes, the rule may not apply. |
-| **Coding Principles (C)** | Project | Medium-High | Guidelines for writing code in a specific implementation. Change with the tech stack. |
+| **Design Choices (D)** | Implementation | High | Frameworks, infrastructure, architecture. Specific to an implementation. |
+| **Implementation Rules (IR)** | Implementation | High | Hard stops contingent on design choices. If the design choice changes, the rule may not apply. |
+| **Coding Principles (C)** | Implementation | Medium-High | Guidelines for writing code in a specific implementation. Change with the tech stack. |
 | **Constraints (CON)** | Project | High | Facts about the system we don't control but must work within. Descriptive, not prescriptive. |
 
-### Priority
+### Priority and Inheritance
 
-When items conflict, higher-priority sources win:
+Every GVP file declares its parent via `meta.inherits`. Priority flows from root to leaf: **parent wins on conflict, child extends**. Items in a child scope supplement but must not contradict items in a parent scope.
 
-1. **`universal.yaml`** — organization-wide (IDs prefixed `U`: UV, UP, UH, UR)
-2. **`personal.yaml`** — individual cross-project (IDs: V, P, H, R)
-3. **`projects/<project>.yaml`** — project-specific (IDs: G, M, D, CON, IR, C)
+The nesting depth is user-defined. The conventional structure is:
 
-For personal use, `universal.yaml` can remain empty. For organizational use, it captures items that apply across all teams and projects.
+```
+universal.yaml                          (org-wide, highest priority)
+  └─ personal.yaml                      (individual cross-project)
+       └─ projects/unturned.yaml        (project: goals, constraints)
+            └─ projects/unturned/ctl-v1.yaml  (implementation: design choices, rules)
+                 └─ ...                  (feature, sprint, etc.)
+```
+
+What constitutes a "project" vs "implementation" vs "feature" is up to the user — the framework doesn't enforce granularity, only the inheritance chain. A root scope (like `universal.yaml`) omits `inherits`.
+
+For personal use, `universal.yaml` can remain empty. For organizational use, it captures items that apply across all teams and projects (IDs prefixed `U`: UV, UP, UH, UR).
 
 ### Relationships
 
@@ -105,8 +114,10 @@ After accumulating planning docs across sessions/projects, review the "inferred 
 
 - **Principles without heuristics** are fine — not everything has enough data points to formalize a decision procedure yet
 - **Heuristics should acknowledge their context** — if inferred from code decisions, note that; generalize as evidence accumulates from other domains
-- **Each item carries origin and update history** — `origin` records where an item was first inferred; `updated_by` records subsequent modifications with a `rationale` field explaining what changed and why. See [`schema.yaml`](schema.yaml) for full field definitions.
-- **IDs are stable** — never reuse a retired ID
+- **Each item carries origin and update history** — `origin` records where an item was first inferred; `updated_by` records subsequent modifications with a `rationale` field explaining what changed and why. See [`schema.yaml`](schema.yaml) for full field definitions
+- **Use `meta.defaults`** to avoid repeating the same `origin` or `tags` on every item in a file. Items that explicitly set a field override the default
+- **IDs are stable and sequential** — auto-assigned by the `gvp` utility, no gaps. Never reuse a retired ID
+- **Deprecate, don't delete** — items that are no longer relevant get `status: deprecated` (or `status: rejected`). Add an `updated_by` entry with a `rationale` explaining why. Deprecated items keep their ID forever and are hidden from default renders but visible with `--include-deprecated`
 
 ## Usage
 

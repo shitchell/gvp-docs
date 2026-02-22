@@ -11,7 +11,7 @@ domains:
   cli:
     description: Command-line interface and terminal tool design
   ux:
-    description: End-user experience decisions (any interface, not just GUI)
+    description: Decisions about user-facing interfaces and interactions (visual, CLI, API surface)
 
 concerns:
   maintainability:
@@ -27,4 +27,4 @@ concerns:
   correctness:
     description: Ensuring systems behave as specified and produce verifiable results
   usability:
-    description: Minimizing friction for end-users and consumers of APIs
+    description: Reducing friction and cognitive load in any context (end-user, developer, API consumer)

@@ -1,12 +1,13 @@
 # Personal GVP — Values, Principles, Heuristics, Rules
 #
-# Source of truth for cross-project decision-making framework.
-# Use the `gvp` utility to render, validate, and query.
-# See schema.yaml for field definitions and validation rules.
-#
-# ID scheme:
-#   V = Value, P = Principle, H = Heuristic, R = Rule
-#   IDs are stable — never reuse a retired ID.
+# Individual cross-project decision-making framework. Inherits from
+# universal.yaml. See schema.yaml for field definitions and
+# inheritance rules.
+
+meta:
+  name: personal
+  inherits: universal
+  scope: personal
 
 values:
 
@@ -184,7 +185,7 @@ principles:
       appealing API shape.
     tags: [code, systems, pragmatism]
     maps_to: [V3, V6]
-    heuristics: [H7]
+    heuristics: [H6]
     origin:
       - project: unturned-ctl
         decisions: [12]
@@ -224,7 +225,7 @@ principles:
       into distinct layers.
     tags: [maintainability, correctness, systems]
     maps_to: [V6, V7]
-    heuristics: [H6]
+    heuristics: [H5]
     origin:
       - project: unturned-ctl
         decisions: [9, 10]
@@ -340,7 +341,7 @@ heuristics:
         decisions: [4, 8]
         date: 2026-02-22
 
-  - id: H6
+  - id: H5
     name: Invariant-based separation
     statement: >
       If a unit of work requires an external dependency to fulfill its
@@ -366,7 +367,7 @@ heuristics:
           ("invariant-based separation") may apply to non-code systems
           but needs additional evidence before claiming generality.
 
-  - id: H7
+  - id: H6
     name: Access pattern matching
     statement: >
       If choosing between design patterns for a component, then list
