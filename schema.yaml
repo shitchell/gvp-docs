@@ -196,6 +196,10 @@ provenance:
 #
 #   updated_by: Subsequent modifications.
 #               (type: list[provenance.updated_by], required: false)
+#
+#   reviewed_by: Review acknowledgments. Records when an element was last
+#               confirmed as still accurate after upstream changes.
+#               (type: list[provenance.reviewed_by], required: false)
 
 
 # --- Item Types ---

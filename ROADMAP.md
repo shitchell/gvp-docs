@@ -38,16 +38,17 @@ typed mappings use known relationship types.
 
 When an element is updated (`updated_by` with a timestamp), all
 descendants in the mapping graph may need review — the change could
-invalidate downstream decisions. Add:
+invalidate downstream decisions. The implementation:
 
-1. `updated_by.timestamp` — already exists as `date`, may need finer granularity
-2. `reviewed` field on elements — schema TBD, at minimum `{timestamp}`,
-   potentially also `{notes, user, comments}`
-3. Validation rule: if any element in a chain has an `updated_by` timestamp
-   newer than a descendant's latest `reviewed` timestamp (or if the
-   descendant lacks a `reviewed` entry), emit a warning prompting review
+1. `updated_by.date` records modification timestamps on elements
+2. `reviewed_by` field on elements records review acknowledgments
+   (`{date, by, note}`) — see `schema.yaml` provenance section
+3. W006 validation rule: if any ancestor has an `updated_by.date` newer
+   than a descendant's latest `reviewed_by.date` (or if the descendant
+   lacks a `reviewed_by` entry), emit a warning prompting review
 
-This ensures changes propagate human attention through the graph.
+The `gvp review` command lists stale elements and provides interactive
+review workflow to acknowledge upstream changes.
 
 
 ## Investigate TASV-Playwright GVP Document
