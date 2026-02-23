@@ -34,7 +34,7 @@ typed mappings use known relationship types.
 
 ## Chain Review Validation
 
-**Status:** Planned (design immediately after gvp utility v1 implementation)
+**Status:** Done — implemented as W006 staleness warning in `gvp validate`. Elements with `reviewed_by` dates older than ancestor `updated_by` dates trigger a warning. The `review` command provides interactive review workflow.
 
 When an element is updated (`updated_by` with a timestamp), all
 descendants in the mapping graph may need review — the change could
@@ -52,7 +52,7 @@ This ensures changes propagate human attention through the graph.
 
 ## Investigate TASV-Playwright GVP Document
 
-**Status:** Planned (immediately after gvp utility v1 implementation)
+**Status:** Done — framework content migrated to gvp utility README and GLOSSARY. Category-specific traceability rules implemented in `gvp validate`. Delineation tests added to README categories table.
 
 Review `~/GOALS_VALUES_PRINCIPLES-tasv-playwright.md` against the gvp-docs
 schema and the gvp utility. This is the original document where the GVP

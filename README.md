@@ -1,6 +1,6 @@
 # Goals, Values, and Principles (GVP)
 
-Personal GVP library. See [`gvp`](https://github.com/shitchell/gvp) for framework documentation (categories, validation rules, delineation tests, etc.).
+Personal GVP library. See the `gvp` utility for framework documentation (categories, validation rules, delineation tests, etc.).
 
 ## Structure
 
@@ -45,4 +45,4 @@ After accumulating planning docs across sessions/projects, review the "inferred 
 
 ## Usage
 
-See the [`gvp`](https://github.com/shitchell/gvp) utility for rendering, validation, and querying.
+Install the `gvp` utility for rendering, validation, querying, and review workflows.
