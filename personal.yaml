@@ -1,402 +1,340 @@
-# Personal GVP — Values, Principles, Heuristics, Rules
-#
-# Individual cross-project decision-making framework. Inherits from
-# universal.yaml. See schema.yaml for field definitions and
-# inheritance rules.
-
 meta:
   name: personal
-  inherits: universal
-  scope: personal
-
+  scope: universal
+  definitions:
+    tags:
+      domains:
+        meta:
+          description: Decision-making process, delegation, planning approach
+        code:
+          description: Software development across all languages and domains
+        web:
+          description: Browser-based applications, HTML/CSS/JS, web APIs
+        realtime:
+          description: Real-time systems, multiplayer, P2P, game loops
+        ai:
+          description: AI agent integration, LLM-assisted development
+      concerns:
+        simplicity:
+          description: Reducing complexity, preferring minimal solutions
+        trust:
+          description: Verification, validation, honest reporting of limitations
+        composability:
+          description: DRY, modularity, shared infrastructure
+        autonomy:
+          description: User control, opt-in, meaningful choices
+        preservation:
+          description: Data integrity, no silent loss, unknown field handling
+        security:
+          description: Input sanitization, boundary validation, secrets management
+        performance:
+          description: Resource lifecycle, caching, frame-rate independence
+        maintainability:
+          description: Naming, structure, extensibility, testability
+goals:
+  - id: G1
+    name: Systems that align with intent without constant oversight
+    statement: |
+      Build systems where the guiding elements (values, principles, heuristics, rules) are comprehensive enough that an implementer — human or AI — can make aligned decisions without asking. Reduce the cognitive load of architectural review while maintaining alignment.
+    tags:
+      - meta
+      - ai
+    maps_to: []
+  - id: G2
+    name: Portable, composable knowledge that outlives any single project
+    statement: |
+      Capture decision-making patterns in reusable libraries that compound across projects. The lessons from project N inform project N+1 without rediscovery. Knowledge lives in libraries, not in heads.
+    tags:
+      - meta
+    maps_to: []
 values:
-
   - id: V1
-    name: Transparency
-    statement: >
-      State, behavior, and decisions should be visible and inspectable.
-      When someone is operating on state, they should see the full state.
-      When something breaks, the system provides enough information to
-      diagnose the failure without reproducing it. Decisions are traceable
-      to goals.
-    tags: [transparency]
-    origin:
-      - project: unturned-ctl
-        decisions: [3, 5]
-        date: 2026-02-22
-        evidence: >
-          Chose full-replace over merge semantics so users see exactly what
-          gets written. Chose cheap-but-visible validation over hidden
-          strictness.
-
-  - id: V2
-    name: DRY
-    statement: >
-      Write once, use everywhere. Duplication of logic, patterns, or
-      structure is a maintenance liability. When the same logic appears
-      in multiple places, a future change risks inconsistency.
-    tags: [maintainability]
-    origin:
-      - project: unturned-ctl
-        decisions: [2, 6, 11]
-        date: 2026-02-22
-        evidence: >
-          User explicitly stated: "i love DRY." Chose generic Catalog[T]
-          over N specialized catalogs. Delegated backup to existing system.
-
-  - id: V3
     name: Simplicity
-    statement: >
-      Easy to understand. Explicit is better than implicit. Fewer
-      abstractions, fewer layers, fewer special cases. Complexity is
-      acceptable only when it serves a concrete need.
-    tags: [usability, maintainability]
+    statement: |
+      Prefer the simplest approach that meets the requirement. Complexity must earn its place — every abstraction, indirection, or generalization should solve a real problem, not a hypothetical one. Fewer things to parse, fewer assumptions to understand, fewer moving parts.
+    tags:
+      - simplicity
+    maps_to:
+      - personal:G1
     origin:
-      - project: unturned-ctl
-        decisions: [3, 5, 12]
-        date: 2026-02-22
-        evidence: >
-          Full-replace over merge (no hidden behavior). Cheap validation
-          over strict (don't gold-plate). Catalog queries over
-          item-as-object (simpler model for the use case).
-
+      - date: '2026-04-04'
+        note: Strongest signal across 7/8 personal projects
+  - id: V2
+    name: Transparency
+    statement: |
+      Be honest about trade-offs, limitations, and the reasoning behind decisions. Never pretend fundamental limitations are solvable through cleverness. When corners are cut or trade-offs made, document them explicitly. Presenting a clean facade over unclear motivations helps no one.
+    tags:
+      - trust
+    maps_to:
+      - personal:G1
+    origin:
+      - date: '2026-04-04'
+        note: 7/8 projects — philosophical commitment, not just technical
+  - id: V3
+    name: Composability and DRY
+    statement: |
+      Build small, focused pieces that combine naturally. Shared infrastructure is written once and composed, not copy-pasted. "I love DRY."
+    tags:
+      - composability
+    maps_to:
+      - personal:G1
+      - personal:G2
+    origin:
+      - date: '2026-04-04'
+        note: 6/8 projects — verbatim 'i love DRY' in lnotify
   - id: V4
-    name: Composability
-    statement: >
-      Build on and combine existing pieces rather than reinventing.
-      Prefer extending what exists over building parallel systems.
-      Small, focused components that combine freely are more valuable
-      than monolithic ones.
-    tags: [composability, maintainability]
+    name: User autonomy
+    statement: |
+      Users should have meaningful control over their experience. The system provides options and defaults; the user decides. Prefer opt-in over auto-activation.
+    tags:
+      - autonomy
+    maps_to:
+      - personal:G1
     origin:
-      - project: unturned-ctl
-        decisions: [6, 7]
-        date: 2026-02-22
-        evidence: >
-          Delegated backup to existing hardlink system. Extended
-          ItemResolver minimally rather than rebuilding from scratch.
-
+      - date: '2026-04-04'
+        note: 5/8 projects — consistent across very different domains
   - id: V5
-    name: Just Works
-    statement: >
-      Systems should work correctly out of the box with zero
-      configuration. Respect platform conventions and environment
-      defaults. Users should only need to configure things when they
-      want to deviate from the sensible default.
-    tags: [usability]
+    name: Data preservation
+    statement: |
+      Never silently discard, overwrite, or strand user data. Unknown fields are preserved, not filtered. Switching modes or configurations should never lose data.
+    tags:
+      - preservation
+    maps_to:
+      - personal:G1
     origin:
-      - project: unturned-ctl
-        decisions: [4, 8]
-        date: 2026-02-22
-        evidence: >
-          User stated: "i like a Just Works philosophy for end-users or
-          devs using an API." Added update-alternatives to editor fallback
-          so Debian users don't need to set env vars. Interactive
-          disambiguation by default.
-
-  - id: V6
-    name: Maintainability
-    statement: >
-      Systems should be easy to modify, extend, and debug over time.
-      Today's choices should not make tomorrow's work harder. Reduce
-      the future cost of change.
-    tags: [maintainability]
+      - date: '2026-04-04'
+        note: 4/8 projects — strong when present
+constraints:
+  - id: C1
+    name: AI time estimates are unreliable
+    impact: |
+      AI models are trained on human measurements of time but operate at fundamentally different speeds. Never frame AI-assisted development in terms of traditional time-cost tradeoffs. Measure quality tiers or token cost, not hours or weeks.
+    tags:
+      - ai
+      - meta
+    maps_to: []
+  - id: C2
+    name: People optimize for minimal effort
+    impact: |
+      Humans and AI alike tend toward the path of least resistance. Any process or standard that relies on discipline alone will erode over time. Design systems that make the right thing easy rather than relying on willpower.
+    tags:
+      - meta
     origin:
-      - project: unturned-ctl
-        decisions: [2, 7, 9, 10]
-        date: 2026-02-22
-        evidence: >
-          Co-located serialize() with parse() for maintainability.
-          Chose balanced approach to merge planning. Separated editor
-          layer so parsers are merge-stable.
-
-  - id: V7
-    name: Correctness through evidence
-    statement: >
-      Confidence comes from evidence, not assertion. Distinguish
-      observation from inference. Testable invariants are preferred
-      over untestable claims.
-    tags: [correctness, transparency]
-    origin:
-      - project: unturned-ctl
-        decisions: [9, 10]
-        date: 2026-02-22
-        evidence: >
-          The round-trip invariant serialize(parse(f)) == f was
-          explicitly chosen as the core correctness property because
-          it's mechanically verifiable.
-
-
+      - id: 5f313ef2-acc8-4648-ad32-e4cfcb49ee7f
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from personal.yaml
 principles:
-
   - id: P1
-    name: One Contiguous Block
-    statement: >
-      Related logic that changes together should live together,
-      provided co-location would not violate other principles,
-      heuristics, or best practices. If we know future changes are
-      coming or a category of change will be frequent, design so those
-      changes need only happen in one contiguous block of code.
-    tags: [maintainability, code, systems]
-    maps_to: [unturned:G1, unturned:G3, personal:V2, personal:V6]
+    name: Design around flex points
+    statement: |
+      When a future change is plausible, shape the architecture so the change is not painful when it arrives — but do not implement the change early. Infinite flexibility for hypothetical scenarios equals infinite complexity. Zero flexibility locks you into headaches.
+    tags:
+      - maintainability
+    maps_to:
+      - personal:G1
+      - personal:V1
     origin:
-      - project: unturned-ctl
-        decisions: [2, 6, 11]
-        date: 2026-02-22
-        evidence: >
-          User stated: "i love DRY and a sort of One-Contiguous-Block
-          principle -- if we know future changes are coming or especially
-          some category of change will be frequent, we should design
-          around the idea that (as much as possible and can be achieved
-          without gross violations of best practice) those changes need
-          only happen in one contiguous block of code."
-
+      - date: '2026-04-04'
+        note: 6/8 projects — nearly identical wording, core architectural stance
   - id: P2
-    name: Minimize total cost across phases
-    statement: >
-      When facing a build-now vs build-for-later trade-off, find the
-      option that minimizes total cost across both phases. Don't
-      optimize for either phase in isolation. If a clean seam costs
-      little now and saves significant refactoring later, take it. If
-      building the future architecture now demands disproportionate
-      planning, defer it.
-    tags: [pragmatism, systems]
-    maps_to: [unturned:G3, personal:V4, personal:V6]
+    name: Empirical validation before commitment
+    statement: |
+      Test assumptions with real code and real data before committing to design decisions. Protocols are tested by running them, not by reasoning about them. Data, not vibes.
+    tags:
+      - trust
+    maps_to:
+      - personal:G1
+      - personal:V2
     origin:
-      - project: unturned-ctl
-        decisions: [7]
-        date: 2026-02-22
-        evidence: >
-          User stated: "this just seemed like the happy balance to me
-          between time-cost now, simplicity/bug-risk now, and future
-          merge complexity."
-        note: >
-          Principle only, no heuristic yet. One data point; may evolve
-          into a heuristic as more planning docs provide examples.
-
+      - date: '2026-04-04'
+        note: 6/8 projects — one of the most distinctive personal principles
   - id: P3
-    name: Match the pattern to the access pattern
-    statement: >
-      Before adopting a design pattern, enumerate the actual access
-      patterns in the current use case. Adopt the pattern that matches
-      how the data is actually accessed, not the one with the most
-      appealing API shape.
-    tags: [code, systems, pragmatism]
-    maps_to: [unturned:G1, personal:V3, personal:V6]
+    name: Separate what from how at every layer
+    statement: |
+      Requirements specify behavior (what the system must do). Design decisions specify architecture (how the system is structured). Implementation chooses form (the specific code). Keep these layers clean. The test: if you rewrote this in a different language/framework, would this statement still be true? If yes, it's a requirement. If no, it's an implementation detail.
+    tags:
+      - meta
+      - maintainability
+    maps_to:
+      - personal:G1
+      - personal:V2
     origin:
-      - project: unturned-ctl
-        decisions: [12]
-        date: 2026-02-22
-        evidence: >
-          User stated: "just because i think the API i described sounds
-          cool and possibly nifty/useful doesn't make it the best for
-          our use-cases."
-
+      - date: '2026-04-04'
+        note: From NOTES.md — meta-level decision-making principle
   - id: P4
-    name: Validate through breadth
-    statement: >
-      When building a system intended for genericization or
-      extensibility, implement multiple contrasting concrete cases
-      simultaneously. A single implementation cannot reveal where the
-      abstraction leaks.
-    tags: [extensibility, correctness, code, systems]
-    maps_to: [unturned:G1, personal:V6, personal:V7]
+    name: Generic solutions over special-case handling
+    statement: |
+      When encountering a specific failure, prefer building a generic mechanism that handles the class of failures, not just the instance. Special-case fixes accumulate; generic mechanisms compose.
+    tags:
+      - composability
+      - maintainability
+    maps_to:
+      - personal:G2
+      - personal:V3
     origin:
-      - project: unturned-ctl
-        decisions: [1]
-        date: 2026-02-22
-        evidence: >
-          User stated: "doing multiple -- even just 2 -- helps force
-          better genericization and ensure we set it up in a way that
-          will be flexible and catch places where we fall short of that
-          goal, which in turn facilitates future extension."
-
+      - date: '2026-04-04'
+        note: 4/8 projects
   - id: P5
-    name: Separate responsibilities at invariant boundaries
-    statement: >
-      When a unit of work requires an external dependency to fulfill
-      its contract, evaluate whether it is performing multiple
-      responsibilities. If isolating one responsibility would yield a
-      testable invariant that the dependency would break, separate them
-      into distinct layers.
-    tags: [maintainability, correctness, systems]
-    maps_to: [unturned:G2, personal:V6, personal:V7]
+    name: Plans informed by reality
+    statement: |
+      Do not plan speculatively. Build phase N, then plan phase N+1 based on what you actually learned. Implementation plans written per phase, after the previous phase teaches you what the real interfaces and gotchas are.
+    tags:
+      - meta
+    maps_to:
+      - personal:G1
+      - personal:V2
     origin:
-      - project: unturned-ctl
-        decisions: [9, 10]
-        date: 2026-02-22
-        evidence: >
-          serialize() shouldn't need a resolver because
-          serialize(parse(f)) == f is a testable invariant that a
-          resolver would break. The domain logic was extracted into a
-          separate editor layer.
-
+      - date: '2026-04-04'
+        note: 3/8 projects — consistent in spirit
   - id: P6
-    name: Transparent ownership under constraints
-    statement: >
-      The ideal is comprehensive validation that prevents user error.
-      When comprehensive validation is not feasible for a given phase,
-      validate what is free and let the user own the rest with full
-      transparency. As constraints lift, expand toward the ideal.
-    tags: [transparency, usability, pragmatism]
-    maps_to: [unturned:G2, personal:V1, personal:V5]
+    name: Decompose rationale to its most domain-agnostic element
+    statement: |
+      When recording a lesson, decompose its rationale to the most domain-agnostic guiding element before writing it down, then extend that broad element with narrower domain- or language-specific elements that map up to it. A surface-level heuristic yields value for one scenario; identifying the underlying principle yields aligned decisions across domains not yet encountered. This is DRY applied to guiding elements: duplicating reasoning across scenario-specific heuristics is like copy-pasting code. One specific lesson may fan into several elements at different levels.
+    tags:
+      - meta
+      - composability
+    maps_to:
+      - personal:G2
+      - personal:V3
     origin:
-      - project: unturned-ctl
-        decisions: [3, 5]
-        date: 2026-02-22
-        evidence: >
-          User stated: "if it's easy, validate, else just trust the
-          user... if they add bad data that won't load in-game, that's
-          a them problem." On comprehensive validation: "i do want a
-          TUI which provides live warnings/errors so that the user
-          *doesn't* break things, and ideally that would be
-          comprehensive. the only reason for not doing that now is
-          time-cost."
-
-
+      - id: 5315b699-9eca-4e28-bd59-109b4615cafa
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from personal.yaml
+  - id: P7
+    name: Every process needs a concrete enforcement mechanism
+    statement: |
+      A process without enforcement is a suggestion that will be forgotten under context pressure. Every intended process needs a concrete mechanism — a hook, check, CI gate, validation, or migration — that makes the right thing automatic and the wrong thing observable. Relying on discipline alone guarantees drift.
+    tags:
+      - meta
+      - maintainability
+    maps_to:
+      - personal:G1
+      - personal:V2
+      - personal:C2
+    origin:
+      - id: 76cc28b4-b4a3-440b-aedd-0bc4ddeeb20c
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from personal.yaml
+  - id: P8
+    name: Consolidated interfaces over many near-duplicate entry points
+    statement: |
+      Prefer fewer entry points with options over many slightly-different entry points. Three commands with flags beat twenty near-duplicate subcommands. The interface — CLI, API, config, even organizational structure — should match the consumer's mental model, not the implementation's module boundaries.
+    tags:
+      - simplicity
+      - maintainability
+    maps_to:
+      - personal:G1
+      - personal:V1
+    origin:
+      - id: 399824c9-50b6-4568-a8b3-b9e866e7979d
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from personal.yaml
+  - id: P9
+    name: Follow rules uniformly, change them explicitly
+    statement: |
+      Consistency means following whatever the current rules are; flexibility means the rules themselves can change through explicit decision. Both are valued. Do not silently break a rule for a one-off; change the rule through a deliberate, human-planned decision, document the reason, and form a heuristic for when the old rule versus the new rule applies — then follow the new rule consistently.
+    tags:
+      - meta
+      - maintainability
+    maps_to:
+      - personal:G1
+      - personal:V2
+    origin:
+      - id: a1be833d-2557-46a6-bfc8-08eea8e4800c
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from personal.yaml
+  - id: P10
+    name: Structural asymmetry is bias — check for it explicitly
+    statement: |
+      When a design represents multiple categories of things, check whether the structure gives one category an advantage over another. If one source type gets a dedicated type and another is inline, that is bias; if built-in plugins get affordances third-party ones lack, that is bias. Structural asymmetry — not just lexical choice — is the primary signal. Apply it to schemas, API affordances, framework privileges, and organizational structures.
+    tags:
+      - maintainability
+      - trust
+    maps_to:
+      - personal:G1
+      - personal:V2
+    origin:
+      - id: 96405447-222f-420b-9ddf-d80b18f83fbe
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from personal.yaml
 heuristics:
-
   - id: H1
-    name: Breadth test for generics
-    statement: >
-      If building a system intended for genericization or extensibility
-      across multiple formats, categories, or types, then implement at
-      least 2 contrasting concrete cases simultaneously. A single
-      implementation can't reveal where the abstraction leaks —
-      contrasting data shapes force the generic boundaries into the
-      right place.
-    tags: [extensibility, correctness, code, systems]
-    maps_to: [personal:P4]
+    name: Extraction timing
+    statement: |
+      If the boundary between two concerns is clean and natural, extract now. If the boundary is unclear, wait until a second consumer forces the design. Do not create shared abstractions before a real shared need exists AND the boundary is empirically clear.
+    tags:
+      - composability
+      - maintainability
+    maps_to:
+      - personal:G1
+      - personal:V1
+      - personal:V3
     origin:
-      - project: unturned-ctl
-        decisions: [1]
-        date: 2026-02-22
-
+      - date: '2026-04-04'
+        note: 4/8 projects — tersest wording is canonical
   - id: H2
-    name: One Contiguous Block application
-    statement: >
-      If related logic changes together (modifying behavior X requires
-      understanding both A and B), and co-locating that logic would not
-      violate other principles, heuristics, or best practices, then
-      co-locate it. The test: could someone make a valid change to this
-      behavior by editing one contiguous block of code?
-
-      Corollary: before building a new capability, check if an existing
-      system already does it (or mostly does it). If it covers the core
-      need, then delegate or extend. If it covers less than half the
-      need, then build from scratch. If somewhere in between, evaluate
-      whether extension is clean or would distort the existing system.
-    tags: [maintainability, composability, code, systems]
-    maps_to: [personal:P1, personal:V2, personal:V4]
+    name: Delegation test
+    statement: |
+      When multiple viable answers exist and you have no strong preference for the specific form: define the constraints (what must be true about the outcome) and let the implementer choose the form (how to achieve it). The test: would you notice or care if the implementer chose differently? If no, define constraints and delegate. Exception: never delegate when the choice affects user-facing behavior, constrains future flexibility, or when you have a strong opinion (even if it's just taste).
+    tags:
+      - meta
+    maps_to:
+      - personal:G1
+      - personal:V1
     origin:
-      - project: unturned-ctl
-        decisions: [2, 6, 11]
-        date: 2026-02-22
-
+      - date: '2026-04-04'
+        note: From NOTES.md — meta-level decision-making heuristic
   - id: H3
-    name: Constrained validation
-    statement: >
-      If comprehensive validation is not feasible for this phase (time,
-      planning, complexity), then validate what you get for free
-      (reusing computation already being performed) and let the user
-      own the rest with full transparency. "For free" means the check
-      reuses data or logic that already exists for another purpose.
-
-      If the user can see the full state, then do not silently
-      preserve, merge, or override data behind the scenes.
-
-      When the constraint lifts (e.g., TUI with live feedback), expand
-      toward the ideal. The heuristic naturally guides toward more
-      comprehensive validation as "feasible" expands.
-    tags: [transparency, pragmatism, usability]
-    maps_to: [personal:P6, personal:V1, personal:V5]
+    name: Build now when a known future need has clear cost asymmetry
+    statement: |
+      The complement to the deferral tree: when a future need is identified (not speculative) AND the cost of building it now is minor while retrofitting later is clearly greater, build it now. Examples: N-party cardinality when the N use case is known, schema fields that prevent a future migration, interface generality that avoids a breaking change. If the need is speculative or the asymmetry is unclear, defer.
+    tags:
+      - simplicity
+      - maintainability
+    maps_to:
+      - personal:G1
+      - personal:V1
     origin:
-      - project: unturned-ctl
-        decisions: [3, 5]
-        date: 2026-02-22
-
+      - id: 55372306-14b5-474c-8f23-f1b45a127d5d
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from personal.yaml
   - id: H4
-    name: Just Works with explicit overrides
-    statement: >
-      If the system can discover the right behavior from the
-      environment (platform conventions, existing config, standard
-      defaults), then do that — require zero configuration from the
-      user. If users need control over that behavior, then provide
-      explicit overrides (flags, config).
-
-      If a tool supports both interactive and automated use, then
-      default to the interactive behavior (more helpful for humans) and
-      provide an explicit opt-out for automation (e.g.,
-      --non-interactive).
-    tags: [usability, cli]
-    maps_to: [unturned:G1, personal:V5]
+    name: Parallelize human attention with computation
+    statement: |
+      When a computation is running, use the time rather than waiting. When AI is building, review or plan in parallel; when tests are running, write documentation; when presenting while something computes, explain. Dead air wastes time; parallel activity maximizes density.
+    tags:
+      - meta
+    maps_to:
+      - personal:G1
+      - personal:V1
     origin:
-      - project: unturned-ctl
-        decisions: [4, 8]
-        date: 2026-02-22
-
-  - id: H5
-    name: Invariant-based separation
-    statement: >
-      If a unit of work requires an external dependency to fulfill its
-      contract, then evaluate whether it is performing multiple
-      responsibilities. If isolating one responsibility would yield a
-      testable invariant (e.g., f(g(x)) == x) that the dependency
-      would break, then separate them into distinct layers.
-
-      In code specifically: if a function needs a service, resolver, or
-      catalog to do its job, and that dependency prevents a clean
-      round-trip invariant or makes the function untestable in
-      isolation, then extract the service-dependent logic into its own
-      layer.
-    tags: [maintainability, correctness, code, systems]
-    maps_to: [personal:P5, personal:V6, personal:V7]
-    origin:
-      - project: unturned-ctl
-        decisions: [9, 10]
-        date: 2026-02-22
-        note: >
-          The code-specific version is included because this heuristic
-          was inferred from a code decision. The general form
-          ("invariant-based separation") may apply to non-code systems
-          but needs additional evidence before claiming generality.
-
-  - id: H6
-    name: Access pattern matching
-    statement: >
-      If choosing between design patterns for a component, then list
-      the actual access patterns in the current use case. If every use
-      case is a query/lookup, then use a query interface. If every use
-      case is behavior on an instance, then use objects with methods.
-      Do not adopt a pattern because it has an appealing API shape —
-      adopt it because it matches how the data is actually accessed.
-
-      If a pattern fits a future use case but not the current one, then
-      note it for later rather than introducing coupling now.
-    tags: [code, pragmatism]
-    maps_to: [personal:P3, personal:V3]
-    origin:
-      - project: unturned-ctl
-        decisions: [12]
-        date: 2026-02-22
-
-
+      - id: d028d5c3-78cd-4d43-83de-ced46113e004
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from personal.yaml
 rules:
-
   - id: R1
-    name: Verbatim rationale only
-    statement: >
-      When capturing decision rationale, use direct verbatim quotes.
-      Never infer, assume, or paraphrase rationale. If verbatim
-      rationale is not available, ask for it. Misattributed or
-      misinterpreted rationale can derail future planning.
-    tags: [correctness, transparency]
-    maps_to: [unturned:G2, personal:V1, personal:V7]
+    name: Verify before claiming correctness
+    statement: |
+      Never claim a change is correct without verification. Typecheck must pass. Tests must pass. Protocols must be validated through real use. "No trust. Zero trust. Verify everything."
+    tags:
+      - trust
+    maps_to:
+      - personal:G1
+      - personal:V2
     origin:
-      - project: unturned-ctl
-        decisions: []
-        date: 2026-02-22
-        evidence: >
-          User corrected a paraphrased quote during PLANNING.md review
-          and clarified: "if you don't have verbatim to add, please
-          ask!"
+      - date: '2026-04-04'
+        note: 5/8 projects — hard rule, not a preference
+  - id: R2
+    name: No silent failures or data loss
+    statement: |
+      Failures must be surfaced, not swallowed. Data must not be silently lost. If a write fails, the user must know. If data is discarded, it must be explicit. Bugs compound — do not greenlight failing states.
+    tags:
+      - trust
+      - preservation
+    maps_to:
+      - personal:G1
+      - personal:V2
+      - personal:V5
+    origin:
+      - date: '2026-04-04'
+        note: 5/8 projects — universal pattern

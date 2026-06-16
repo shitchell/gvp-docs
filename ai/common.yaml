@@ -1,0 +1,113 @@
+meta:
+  name: ai-common
+  scope: personal
+  inherits: personal
+constraints:
+  - id: C1
+    name: AI outcomes reflect systems, not agent fault
+    impact: |
+      An AI agent producing an undesired outcome is a signal of an information gap or a missing system, not a faulty agent. Blame is misdirected: the agent acted on what it had. Treat every bad outcome as a prompt to find the missing context or procedure and capture it, so the right thing becomes easy and the wrong thing observable.
+    tags:
+      - ai
+      - meta
+    origin:
+      - id: 2b2cc4b4-37e2-4508-b536-93ebf6d9e620
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from common.yaml
+  - id: C2
+    name: AI agents reproduce patterns from the working tree
+    impact: |
+      Agents read and reproduce whatever patterns are visible in the codebase and docs. Stale artifacts, misleading names, and dead code cause agents to generate incorrect code. The working tree must be curated for AI legibility as much as for human legibility.
+    tags:
+      - ai
+      - maintainability
+    origin:
+      - id: d7da543f-f228-4fa0-912e-3d143ff4396e
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from common.yaml
+  - id: C3
+    name: Token-distance recall is lossy
+    impact: |
+      Giving an agent information and expecting perfect recall an indeterminate number of tokens later is lossy: the further information sits from its point of use, the less reliably it is applied. This is an architectural property of context windows, not a tuning problem.
+    tags:
+      - ai
+      - meta
+    origin:
+      - id: b0143ae5-4047-474b-8be6-a8454d60910d
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from common.yaml
+  - id: C4
+    name: Flow interruption causes step-dropping
+    impact: |
+      Interrupting an agent mid-flow — injecting a full message while it works on something else — can cause it to drop steps in its current task. The interruption consumes attention and the agent may not return to the exact prior point. Lightweight signals are preferable to full interrupts.
+    tags:
+      - ai
+      - meta
+    origin:
+      - id: b21d4f3b-cc0b-4155-bc50-02ae019e3dc0
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from common.yaml
+principles:
+  - id: P1
+    name: Fix the system, capture the missing procedure, never blame
+    statement: |
+      When an AI-assisted outcome is wrong, identify the information gap and the missing system rather than assigning blame. Capture the intended flow as a procedure or guiding element so it is visible, reviewable, and enforceable. The goal is to make the right thing easy and the wrong thing observable.
+    tags:
+      - ai
+      - meta
+    maps_to:
+      - personal:G1
+      - personal:V2
+      - ai/common:C1
+      - personal:P7
+    origin:
+      - id: fcf71a79-7157-453c-8565-2076b115cd08
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from common.yaml
+  - id: P2
+    name: Curate the working tree for AI legibility
+    statement: |
+      Because agents reproduce what they see, aggressively remove stale artifacts, dead code, and misleading names, and prefer tools with deeper AI training data when the choice is otherwise even. Treat AI legibility as a first-class design constraint, not an afterthought.
+    tags:
+      - ai
+      - maintainability
+    maps_to:
+      - personal:G1
+      - personal:V2
+      - ai/common:C2
+    origin:
+      - id: 7d288db5-7295-4203-a8fa-f1bbbf34cb17
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from common.yaml
+  - id: P3
+    name: Deliver context at the point of use (read-on-demand)
+    statement: |
+      Because recall degrades with token distance, deliver information at the moment the agent will act on it rather than when it first becomes available. Prefer read-on-demand retrieval over front-loading context that must survive an indeterminate distance to its point of use.
+    tags:
+      - ai
+      - simplicity
+    maps_to:
+      - personal:G1
+      - personal:V1
+      - ai/common:C3
+    origin:
+      - id: 881474cd-1cec-4f8d-b067-935e966ddcdc
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from common.yaml
+rules:
+  - id: R1
+    name: Verify a recalled reference against current state before acting
+    statement: |
+      A recalled memory or observation that names a specific file, function, or convention is a claim about the past. Before recommending or acting on it, verify it against the current state of the code or system. Stale references must not drive action.
+    tags:
+      - ai
+      - trust
+    maps_to:
+      - personal:G1
+      - personal:V2
+      - ai/common:C3
+      - personal:R1
+    origin:
+      - id: f55e7230-4c1e-43ad-bb78-b2763da77c54
+        date: '2026-06-16T02:17:29.843Z'
+        note: Imported from common.yaml
