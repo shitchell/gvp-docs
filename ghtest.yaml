@@ -1,8 +1,0 @@
-meta:
-  name: ghtest
-  scope: universal
-goals:
-  - id: G1
-    name: "GitHub Inheritance Probe GHPROBE-0DCFF018"
-    statement: "This element exists ONLY in the gvp-docs GitHub repo, not in the local ~/.gvp library. If 'cairn query' shows it for a project that inherits @github:shitchell/gvp-docs, remote github-source inheritance works."
-    maps_to: []
