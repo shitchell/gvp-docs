@@ -104,6 +104,21 @@ values:
     origin:
       - date: '2026-04-04'
         note: 4/8 projects — strong when present
+  - id: V6
+    name: Pluralist anti-realism — no interpretive frame is privileged
+    statement: |
+      Only the underlying "stuff" is real; every interpretive frame — a school of thought, a model,
+      a conceptual lens — is an arbitrary, co-equal story laid over it, true of no more than an
+      infinitesimal slice of perception. No frame is canonical or "more true" than another. Systems
+      built under this value treat frames as parallel and swappable: never hard-coding one as the
+      default truth, making cross-frame swapping and mapping first-class, and presenting disagreement
+      between frames side-by-side rather than ranked. In the user's words: "the only thing that is
+      real in the universe is 'stuff', and any/all conceptualization past that is made up, arbitrary
+      stories built around infinitesimally small slices of perception (including this one)."
+    origin:
+      - id: 37c65db4-550c-477b-9f76-8db79311f1f8
+        date: '2026-06-19T00:14:42.552Z'
+        note: Imported from phil-patch.yaml
 constraints:
   - id: C1
     name: AI time estimates are unreliable
@@ -133,6 +148,7 @@ principles:
     maps_to:
       - personal:G1
       - personal:V1
+      - personal:V6
     origin:
       - date: '2026-04-04'
         note: 6/8 projects — nearly identical wording, core architectural stance
@@ -171,6 +187,7 @@ principles:
     maps_to:
       - personal:G2
       - personal:V3
+      - personal:V6
     origin:
       - date: '2026-04-04'
         note: 4/8 projects
@@ -253,6 +270,7 @@ principles:
     maps_to:
       - personal:G1
       - personal:V2
+      - personal:V6
     origin:
       - id: 96405447-222f-420b-9ddf-d80b18f83fbe
         date: '2026-06-16T02:17:29.843Z'

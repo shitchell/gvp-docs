@@ -47,6 +47,7 @@ principles:
     maps_to:
       - personal:G1
       - personal:V3
+      - personal:V6
   - id: CP5
     name: Configuration infrastructure early, defaults always
     statement: |
@@ -68,6 +69,7 @@ principles:
     maps_to:
       - personal:G2
       - personal:V3
+      - personal:V6
   - id: CP7
     name: Strict typing
     statement: |
