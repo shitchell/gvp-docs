@@ -275,6 +275,20 @@ principles:
       - id: 96405447-222f-420b-9ddf-d80b18f83fbe
         date: '2026-06-16T02:17:29.843Z'
         note: Imported from personal.yaml
+  - id: P11
+    name: AI-first development
+    statement: |
+      Develop so that AI agents, not only humans, can pick up the work and drive it. Externalize decisions, rationale, context, and process into durable, traceable, machine-readable artifacts (guiding-element libraries, decision registers, handoff docs) instead of leaving them in-head. Make the implicit explicit by default, so any capable implementer — human or AI — can act on the work and make aligned decisions without asking.
+    maps_to:
+      - personal:G1
+      - personal:G2
+    tags:
+      - ai
+      - meta
+    origin:
+      - id: 6472d5fb-cf05-41b4-87b5-c50577ef4a8b
+        date: '2026-06-20T16:03:04.597Z'
+        note: Imported from aifirst-principle.yaml
 heuristics:
   - id: H1
     name: Extraction timing
