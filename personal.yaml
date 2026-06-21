@@ -289,6 +289,48 @@ principles:
       - id: 6472d5fb-cf05-41b4-87b5-c50577ef4a8b
         date: '2026-06-20T16:03:04.597Z'
         note: Imported from aifirst-principle.yaml
+  - id: P12
+    name: Scope a work session to one cohesive unit
+    statement: |
+      For AI-driven work, scope each session to a single cohesive unit (e.g. one delivery phase) and start the next unit in a fresh session. The conversation transcript rides every turn and grows monotonically, so cache_read cost compounds within a session; a fresh session per unit is the decisive lever on that cost. Prefer ending at a natural boundary (a merge) over carrying one session across units.
+    maps_to:
+      - personal:P11
+      - personal:V1
+    tags:
+      - ai
+      - meta
+    origin:
+      - id: 14071fc6-8038-41d8-ab75-9ce20a66c820
+        date: '2026-06-21T03:08:29.592Z'
+        note: Imported from supplementary-principles.yaml
+  - id: P13
+    name: Verify in the production runtime, not just the test harness
+    statement: |
+      Green tests are not proof of working software. A test runner can mask runtime and interop bugs that only appear in the real execution environment (e.g. ESM/CJS module resolution differing between the test harness and production). Before claiming a change works, exercise it in the production runtime — boot the app, run the real loader — not only the test suite.
+    maps_to:
+      - personal:V2
+      - personal:P11
+    tags:
+      - trust
+      - meta
+    origin:
+      - id: 0d3188ea-3eab-4a73-91d7-2479f3b5a21a
+        date: '2026-06-21T03:08:29.592Z'
+        note: Imported from supplementary-principles.yaml
+  - id: P14
+    name: Delegate context-heavy work to subagents; return terse
+    statement: |
+      In AI-driven work, push context-heavy exploration and reading into subagents that return terse, structured results, and route large tool outputs through files rather than the main context. Only the parent's re-ingested text rides every subsequent turn, so keeping that lean — delegating the verbose work and absorbing only the conclusions — controls context cost without losing rigor.
+    maps_to:
+      - personal:P11
+      - personal:V1
+    tags:
+      - ai
+      - meta
+    origin:
+      - id: d102f0a9-75f6-40f9-943a-b90a7c468d8c
+        date: '2026-06-21T03:08:29.592Z'
+        note: Imported from supplementary-principles.yaml
 heuristics:
   - id: H1
     name: Extraction timing
