@@ -331,6 +331,19 @@ principles:
       - id: d102f0a9-75f6-40f9-943a-b90a7c468d8c
         date: '2026-06-21T03:08:29.592Z'
         note: Imported from supplementary-principles.yaml
+  - id: P15
+    name: Humans review guiding elements, not decisions
+    statement: |
+      In GVP-governed work the human's review attention belongs on guiding elements (goals, values, constraints, principles, heuristics, rules) — never on individual decisions. A decision is the guided output: when it follows unambiguously from the existing guiding elements, it is correct by construction and needs no human review. Spending human attention per-decision defeats the purpose of the library; spending it on the guidance that determines all future decisions is the leverage.
+    maps_to:
+      - personal:G1
+      - personal:V4
+    tags:
+      - meta
+    origin:
+      - id: e4b27ab4-ef23-451a-92c0-45ea6011612e
+        date: '2026-06-22T23:10:28.081Z'
+        note: Imported from gvp-p15-h5.yaml
 heuristics:
   - id: H1
     name: Extraction timing
@@ -385,6 +398,19 @@ heuristics:
       - id: d028d5c3-78cd-4d43-83de-ced46113e004
         date: '2026-06-16T02:17:29.843Z'
         note: Imported from personal.yaml
+  - id: H5
+    name: Disambiguate-then-surface gate
+    statement: |
+      When a decision is needed: if the existing guiding elements yield a single reasonable decision, record it and proceed — no human review. Else (the guidance admits multiple reasonable decisions), weigh the options against the guidance, select one, AND author the new guiding element(s) that make the selected decision the unambiguous result; surface that guiding-element patch — not the decision — for human review before proceeding.
+    maps_to:
+      - personal:P15
+      - personal:G1
+    tags:
+      - meta
+    origin:
+      - id: bd8b9433-4f72-4f3c-adcd-edd20369f899
+        date: '2026-06-22T23:10:28.081Z'
+        note: Imported from gvp-p15-h5.yaml
 rules:
   - id: R1
     name: Verify before claiming correctness
