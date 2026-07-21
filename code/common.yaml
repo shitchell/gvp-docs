@@ -175,6 +175,20 @@ principles:
       - id: ef50b5ff-2f81-4d2c-b31d-93089b6bbbe8
         date: '2026-06-16T02:17:29.843Z'
         note: Imported from common.yaml
+  - id: CP15
+    name: Swappable persistence behind an abstraction
+    statement: |
+      Keep durable storage behind an abstraction so the concrete datastore is a swappable implementation detail — a local-friendly development database and a production-grade database (or any two backends) stay interchangeable with no change to application logic. Don't couple the domain/authoritative model to one concrete store; choose the store per environment behind the seam. A repository layer or an ORM is one common way to realize the seam — favor the SEAM, not any particular tool. Bought cheaply up front, a later backend change becomes a config swap rather than a rework.
+    tags:
+      - code
+      - composability
+    maps_to:
+      - personal:V7
+      - personal:V3
+    origin:
+      - id: d456c489-f195-4356-ae71-d4e03d8346e1
+        date: '2026-07-21T00:00:00.000Z'
+        note: Added — swappable-persistence/ORM principle (the driver behind threshold's D30/P16).
 heuristics:
   - id: CH1
     name: Dependency adoption threshold

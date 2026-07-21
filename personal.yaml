@@ -119,6 +119,20 @@ values:
       - id: 37c65db4-550c-477b-9f76-8db79311f1f8
         date: '2026-06-19T00:14:42.552Z'
         note: Imported from phil-patch.yaml
+  - id: V7
+    name: Flexibility / optionality
+    statement: |
+      Favor choices that keep the possibility space open over ones that lock you in. When two
+      options are otherwise close, prefer the one that preserves future optionality and doesn't
+      foreclose directions you might later want — swappable seams over hard couplings, extensible
+      abstractions over fixed ones. Flexibility bought cheaply up front is worth far more than the
+      rework it avoids when a foreseeable need arrives. (Distinct from V3 Composability: composability
+      is about building from small combinable parts; this is about not painting yourself into a
+      corner — keeping later options cheap.)
+    origin:
+      - id: 731e0117-388f-45c2-934c-4ce026fbd29c
+        date: '2026-07-21T00:00:00.000Z'
+        note: Added — flexibility/optionality value (the driver behind swappable-persistence/ORM affinity).
 constraints:
   - id: C1
     name: AI time estimates are unreliable
