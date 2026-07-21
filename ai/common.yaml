@@ -58,7 +58,7 @@ principles:
     maps_to:
       - personal:G1
       - personal:V2
-      - ai/common:C1
+      - ai-common:C1
       - personal:P7
     origin:
       - id: fcf71a79-7157-453c-8565-2076b115cd08
@@ -74,7 +74,7 @@ principles:
     maps_to:
       - personal:G1
       - personal:V2
-      - ai/common:C2
+      - ai-common:C2
     origin:
       - id: 7d288db5-7295-4203-a8fa-f1bbbf34cb17
         date: '2026-06-16T02:17:29.843Z'
@@ -89,7 +89,7 @@ principles:
     maps_to:
       - personal:G1
       - personal:V1
-      - ai/common:C3
+      - ai-common:C3
     origin:
       - id: 881474cd-1cec-4f8d-b067-935e966ddcdc
         date: '2026-06-16T02:17:29.843Z'
@@ -105,7 +105,7 @@ rules:
     maps_to:
       - personal:G1
       - personal:V2
-      - ai/common:C3
+      - ai-common:C3
       - personal:R1
     origin:
       - id: f55e7230-4c1e-43ad-bb78-b2763da77c54
