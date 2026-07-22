@@ -358,6 +358,19 @@ principles:
       - id: e4b27ab4-ef23-451a-92c0-45ea6011612e
         date: '2026-06-22T23:10:28.081Z'
         note: Imported from gvp-p15-h5.yaml
+  - id: P16
+    name: Prioritize the integrity of foundational systems (rigor scales with what depends on them)
+    statement: |
+      A system that many other components are built upon deserves rigor in proportion to how much depends on it. A flaw in a foundational, load-bearing system is inherited by everything above it and compounds — it grows more expensive to fix as more is built atop it, and a weak core can force a ground-up rework of everything it carries, whereas a flaw in a leaf component (few or no dependents) stays local and cheap. So invest disproportionate care — correctness, testing, clean seams, design scrutiny — in the core, even at the cost of speed there, because that cost amortizes across every dependent; and conversely let leaf or disposable components be built more loosely. The test when choosing what to build on, or how much to harden something: weight it by blast radius — the more that will rest on it, the less you compromise its integrity. This is stated explicitly because the natural pull is the opposite: under effort-pressure, invisible foundations get shortchanged first (personal:C2), and that is exactly the debt that later propagates.
+    maps_to:
+      - personal:G1
+    tags:
+      - meta
+      - maintainability
+    origin:
+      - id: 988dd6d9-d1f9-4450-a1cb-150f570bbe17
+        date: '2026-07-22'
+        note: Authored during the threshold fresh-session alignment review — the core-integrity driver behind threshold decision D36 (build V1 fresh); no existing element captured it.
 heuristics:
   - id: H1
     name: Extraction timing
