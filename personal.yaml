@@ -371,6 +371,20 @@ principles:
       - id: 988dd6d9-d1f9-4450-a1cb-150f570bbe17
         date: '2026-07-22'
         note: Authored during the threshold fresh-session alignment review — the core-integrity driver behind threshold decision D36 (build V1 fresh); no existing element captured it.
+  - id: P17
+    name: Build, don't defer, a tentative flex point when the seam is uncertain and getting it wrong is costly
+    statement: |
+      Favor building — rather than deferring — a tentative flex point/seam when you're uncertain it can be built correctly AND getting it wrong might incur architectural, heavy, or otherwise risky rework. (An uncertain, high-blast-radius seam is worth proving early — even with a throwaway consumer that only exercises it — rather than banking on an unvalidated assumption.)
+    maps_to:
+      - personal:P1
+      - personal:P16
+    tags:
+      - meta
+      - maintainability
+    origin:
+      - id: 499773d9-7f78-4627-8948-99c70399f14b
+        date: '2026-07-22'
+        note: Authored during the threshold fresh-session alignment review — the seam-correctness qualifier on P1 (build early when a flex point is uncertain and costly to get wrong).
 heuristics:
   - id: H1
     name: Extraction timing
