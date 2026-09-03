@@ -133,6 +133,23 @@ values:
       - id: 731e0117-388f-45c2-934c-4ce026fbd29c
         date: '2026-07-21T00:00:00.000Z'
         note: Added — flexibility/optionality value (the driver behind swappable-persistence/ORM affinity).
+  - id: V8
+    name: Contribution over ownership
+    statement: |
+      What looks like wanting to own a thing is really wanting to have contributed something to people. Ownership is the proxy; contribution is the substance — and in software, open source is the form that contribution actually takes, because a thing nobody can use, read, fork, or build on has not been contributed to anyone.
+      This is a value, not a goal: it is a direction that shapes tradeoffs rather than a state to reach. It generally resolves in favour of publishing over withholding, permissive over restrictive, and legible over clever — and it means secrecy has to earn its place with a specific reason, rather than being the default a project drifts into.
+      It is not a mandate to open source everything regardless of consequence. Where publishing would cause concrete harm, that is a reason; "it isn't polished yet" and "someone might copy it" are not.
+    tags:
+      - meta
+      - trust
+    maps_to: []
+    origin:
+      - id: 9de9ccd3-990b-4a4c-9f06-fb23eb757057
+        date: '2026-09-03T10:16:46.692Z'
+        note: Imported from personal.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
 constraints:
   - id: C1
     name: AI time estimates are unreliable
