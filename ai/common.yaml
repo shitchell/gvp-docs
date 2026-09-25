@@ -94,6 +94,25 @@ principles:
       - id: 881474cd-1cec-4f8d-b067-935e966ddcdc
         date: '2026-06-16T02:17:29.843Z'
         note: Imported from common.yaml
+  - id: P4
+    name: Automate the deterministic; reserve agents for semantics
+    status: active
+    statement: |
+      Any desired outcome or behavior that deterministic code can achieve should be achieved by code — even when that means redesigning or restructuring to make it possible. Limit agentic work to what genuinely needs semantic parsing and understanding (e.g. writing code, judging a finding). Code saves tokens, is reproducible, and becomes a battle-tested wiki of mechanisms: reading a working script beats re-deriving "how do I use this API" from docs.
+    tags:
+      - ai
+      - meta
+    maps_to:
+      - personal:G1
+      - personal:G2
+      - personal:V1
+    origin:
+      - id: e85e1111-7a19-4eb7-8a64-ee0b569ca68c
+        date: '2026-09-25T19:17:12.217Z'
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
+        note: 'In the user''s words: "any desired outcome/behavior which can be automated with deterministic code should be, even where that means some redesign or restructuring needs to happen. the more we can limit agentic tasks to ONLY being required where semantic parsing and understanding is required (e.g.: writing code), the better. it saves tokens, lends towards reproduceability, and codifies mechanisms in its own sort of battle-tested code wiki (i.e.: rather than asking \"how do i use this API to achieve this thing\" and scanning docs, reading a battle-tested script which does the thing)"'
 rules:
   - id: R1
     name: Verify a recalled reference against current state before acting
