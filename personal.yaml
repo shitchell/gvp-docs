@@ -477,7 +477,7 @@ heuristics:
   - id: H5
     name: Disambiguate-then-surface gate
     statement: |
-      When a decision is needed: if the existing guiding elements yield a single reasonable decision, record it and proceed — no human review. Else (the guidance admits multiple reasonable decisions), weigh the options against the guidance, select one, AND author the new guiding element(s) that make the selected decision the unambiguous result; surface that guiding-element patch — not the decision — for human review before proceeding.
+      When a decision is needed: if the existing guiding elements yield a single reasonable decision, record it and proceed — no human review, and never ask "go or no go". A blocker is exactly "any decision that cannot be unambiguously derived from my personal or the project GVP library". Where that is true: (1) weigh the different possible decisions that align with the existing library/libraries, (2) determine what updates would need to be added to the library to make each of those decisions the unambiguous choice over the others, and then (3) present each of those guiding-element patches to the human, with a recommendation — the patches, not bare decisions — before proceeding.
     maps_to:
       - personal:P15
       - personal:G1
@@ -487,6 +487,13 @@ heuristics:
       - id: bd8b9433-4f72-4f3c-adcd-edd20369f899
         date: '2026-06-22T23:10:28.081Z'
         note: Imported from gvp-p15-h5.yaml
+    updated_by:
+      - id: b9669289-0fca-47d1-af14-2679a80c2503
+        date: '2026-09-28T23:55:32.429Z'
+        rationale: 'Shaun, 2026-09-28, verbatim: "a blocker in this case would be ''any decision that cannot be unambiguously derived from my personal or the project GVP library''. and where that is true -- an unambiguous decision cannot be derived -- i would prefer you followed the steps: (1) weigh different possible decisions that align with the existing library/libraries, (2) determine what updates would need to be added to the library to make each of those decisions the unambiguous choice over the others, and then (3) present each of those to me with your recommendation"; and "go or no go is never a question. underlying (potential) blockers are." (~/wmd decision go-no-go-is-never-a-question)'
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
 rules:
   - id: R1
     name: Verify before claiming correctness
