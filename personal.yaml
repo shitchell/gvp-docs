@@ -494,6 +494,15 @@ heuristics:
         by:
           name: Shaun Mitchell
           email: shaun@shitchell.com
+    reviewed_by:
+      - id: 07899efd-4648-4dad-8f99-50c020b3c418
+        date: '2026-09-29T03:24:43.117Z'
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
+        updates_reviewed:
+          - b9669289-0fca-47d1-af14-2679a80c2503
+        note: Shaun's verbatim wording, given 2026-09-28 in the wmd helper session ("a blocker in this case would be 'any decision that cannot be unambiguously derived from my personal or the project GVP library'...")
 rules:
   - id: R1
     name: Verify before claiming correctness
