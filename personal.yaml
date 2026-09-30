@@ -420,6 +420,78 @@ principles:
           name: Shaun Mitchell
           email: shaun@shitchell.com
         note: 'In the user''s words: "a validations/checks thing that is complementary around using deterministic checks to help gate desired outcomes/behaviors wherever possible AND always with friction in mind (i.e.: reduce friction, keep friction neutral, try hard to ensure it is designed without friction, OR ensure any friction is worth the gate)". Drafted by Claude from that; the bypass sentence is Claude''s inference, approved by the user ("i can dig that, go ahead").'
+  - id: P19
+    name: Favor low-effort, high-information signals
+    statement: |
+      Implement low-effort, high-information signals wherever possible, even when it is not certain they will be immediately useful.
+    tags:
+      - meta
+      - simplicity
+    maps_to:
+      - personal:G1
+      - personal:V1
+    origin:
+      - id: e00acaae-957e-41d9-9be3-6884bf3bfb37
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from personal.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
+  - id: P20
+    name: Prefer machine-consumable forms where easy
+    statement: |
+      Where it is easy, shape signals and artifacts so a program can read them. A machine-consumable form can drive automation; a human-only one cannot.
+    tags:
+      - meta
+      - composability
+    maps_to:
+      - personal:G1
+      - personal:V3
+    origin:
+      - id: 07667917-84f5-493d-9814-42c7eea48a96
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from personal.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
+  - id: P21
+    name: Build flex points early to discover the best use
+    statement: |
+      Favor creating many flex points in early builds, exposed as config options, to aid the process of experimenting to discover the best use of the tool.
+    tags:
+      - meta
+      - autonomy
+    maps_to:
+      - personal:G1
+      - personal:V7
+      - personal:V4
+      - personal:P2
+    origin:
+      - id: f0b4d0c3-a240-403e-b96f-805788640d64
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from personal.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
+  - id: P22
+    name: Account for uncertainty during planning
+    statement: |
+      Aim to account for uncertainty during planning: ask which items carry uncertainty, prioritizing load-bearing ones; assess how to deal with it, especially if present hypotheses are wrong; and organize items in whatever way helps manage it.
+    tags:
+      - meta
+      - maintainability
+    maps_to:
+      - personal:G1
+      - personal:P17
+      - personal:P16
+      - personal:P5
+    origin:
+      - id: e59df436-ad73-4718-adbb-58f06896808c
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from personal.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
 heuristics:
   - id: H1
     name: Extraction timing
@@ -503,6 +575,77 @@ heuristics:
         updates_reviewed:
           - b9669289-0fca-47d1-af14-2679a80c2503
         note: Shaun's verbatim wording, given 2026-09-28 in the wmd helper session ("a blocker in this case would be 'any decision that cannot be unambiguously derived from my personal or the project GVP library'...")
+  - id: H6
+    name: Delegate the residual to whoever can survey the evidence faster
+    statement: |
+      Constrain a decision by your real requirements, then delegate what remains to whoever can gather and weigh the evidence faster. Delegation allocates comparative advantage, not disinterest, so the delegate still owes the basis for its choice.
+    tags:
+      - meta
+    maps_to:
+      - personal:G1
+      - personal:H2
+      - personal:V2
+    origin:
+      - id: ae5c43b3-c269-47fb-8731-703ebb4b5c7c
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from personal.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
+  - id: H7
+    name: Interface consolidation is bounded in both directions
+    statement: |
+      Weigh interface consolidation by how many times someone must consult help output to accomplish one task. Both too few and too many entry points raise that count.
+    tags:
+      - simplicity
+      - maintainability
+    maps_to:
+      - personal:G1
+      - personal:P8
+      - personal:V1
+    origin:
+      - id: f4e57513-8708-48f4-a8e0-6c101d313003
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from personal.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
+  - id: H8
+    name: Buy reversibility when it costs less than proof
+    statement: |
+      When validating a choice would cost more than making it reversible, take the judgment call and invest in reversibility instead. Record that the validation was priced and declined, and what would trigger doing it after all.
+    tags:
+      - meta
+      - simplicity
+    maps_to:
+      - personal:G1
+      - personal:P2
+      - personal:P1
+      - personal:V7
+    origin:
+      - id: 9cf33afd-3a6e-4692-9fe5-6988396a7e8d
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from personal.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
+  - id: H9
+    name: Scale naming effort to expected reach
+    statement: |
+      Spend effort on a name in proportion to how many people will encounter it. A small-audience tool does not earn deliberation, and a plainly descriptive name is the right outcome there.
+    tags:
+      - meta
+      - maintainability
+    maps_to:
+      - personal:V8
+      - personal:V1
+    origin:
+      - id: 058c7fe0-1bdc-4f70-bbef-78075f065d21
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from personal.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
 rules:
   - id: R1
     name: Verify before claiming correctness

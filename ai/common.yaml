@@ -61,6 +61,20 @@ constraints:
         by:
           name: Shaun Mitchell
           email: shaun@shitchell.com
+  - id: C6
+    name: Human attention is limited and large output is hard to navigate
+    impact: |
+      A person cannot reliably absorb large volumes of agent output in a conversational UI. Material beyond their attention budget is skimmed rather than read, and locating a specific item within it is costly.
+    tags:
+      - ai
+      - meta
+    origin:
+      - id: ccd5aa2f-a99e-452b-9a93-0ccea7888d9e
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from common.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
 principles:
   - id: P1
     name: Fix the system, capture the missing procedure, never blame
@@ -144,6 +158,67 @@ principles:
       - id: 1e57a172-5264-46ab-b6c6-af620c8171f2
         date: '2026-09-26T17:34:20.315Z'
         note: Imported from gvp-patch-q2.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
+  - id: P6
+    name: Reasoning volume and presentation volume are separate budgets
+    statement: |
+      An agent's token emission is part of how it reasons, so compressing output to fit a reader's attention degrades the work itself. Route full reasoning into documents; keep the conversational channel compact.
+    tags:
+      - ai
+      - meta
+    maps_to:
+      - personal:G1
+      - personal:V1
+      - ai-common:C3
+      - ai-common:P3
+      - ai/common:C6
+    origin:
+      - id: 6204d481-6bac-41cd-bc84-3f3f7507219e
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from common.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
+  - id: P7
+    name: Record who proposed a decision separately from who cares about it
+    statement: |
+      Authorship and interest are independent facts about a decision. Neither implies the other: agent authorship is not permission to change it later, and an unstated/undefined interest is the absence of a signal rather than a neutral one.
+    tags:
+      - ai
+      - trust
+      - meta
+    maps_to:
+      - personal:G1
+      - personal:V2
+      - personal:V4
+    origin:
+      - id: d501f016-6183-48eb-abcc-65bc1a022bfb
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from common.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
+  - id: P8
+    name: A review surface costlier than the reviewer's budget produces false assent
+    statement: |
+      A review artifact costlier than the reviewer can spend yields not a weaker review but a counterfeit one: skim-and-approve is indistinguishable from agreement. Make objecting as cheap as agreeing.
+    tags:
+      - ai
+      - trust
+      - meta
+    maps_to:
+      - personal:G1
+      - personal:V2
+      - personal:V4
+      - personal:C2
+      - personal:P18
+      - ai/common:C6
+    origin:
+      - id: f663cbeb-9a15-4bfb-b4a1-5ab7385d5739
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from common.yaml
         by:
           name: Shaun Mitchell
           email: shaun@shitchell.com

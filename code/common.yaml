@@ -189,6 +189,24 @@ principles:
       - id: d456c489-f195-4356-ae71-d4e03d8346e1
         date: '2026-07-21T00:00:00.000Z'
         note: Added — swappable-persistence/ORM principle (the driver behind threshold's D30/P16).
+  - id: CP16
+    name: Language selection is an effort decision, not a capability one
+    statement: |
+      Among Turing-complete languages capability is equivalent; what differs is effort, driven chiefly by standard library and ecosystem. Evaluate a language on effort and on hard requirements such as type checking, never on what it can do.
+    tags:
+      - code
+      - simplicity
+    maps_to:
+      - personal:G1
+      - personal:V1
+      - code-common:CP7
+    origin:
+      - id: 5764da2a-7353-429e-a9d7-fb83096d37fd
+        date: '2026-09-30T03:34:32.655Z'
+        note: Imported from common.yaml
+        by:
+          name: Shaun Mitchell
+          email: shaun@shitchell.com
 heuristics:
   - id: CH1
     name: Dependency adoption threshold
