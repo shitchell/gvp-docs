@@ -435,8 +435,8 @@ principles:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from personal.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
   - id: P20
     name: Prefer machine-consumable forms where easy
     statement: |
@@ -452,8 +452,8 @@ principles:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from personal.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
   - id: P21
     name: Build flex points early to discover the best use
     statement: |
@@ -471,8 +471,8 @@ principles:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from personal.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
   - id: P22
     name: Account for uncertainty during planning
     statement: |
@@ -490,8 +490,8 @@ principles:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from personal.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
 heuristics:
   - id: H1
     name: Extraction timing
@@ -590,8 +590,8 @@ heuristics:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from personal.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
   - id: H7
     name: Interface consolidation is bounded in both directions
     statement: |
@@ -608,8 +608,8 @@ heuristics:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from personal.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
   - id: H8
     name: Buy reversibility when it costs less than proof
     statement: |
@@ -627,8 +627,8 @@ heuristics:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from personal.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
   - id: H9
     name: Scale naming effort to expected reach
     statement: |
@@ -644,8 +644,8 @@ heuristics:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from personal.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
 rules:
   - id: R1
     name: Verify before claiming correctness

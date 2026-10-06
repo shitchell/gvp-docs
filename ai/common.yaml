@@ -73,8 +73,8 @@ constraints:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from common.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
 principles:
   - id: P1
     name: Fix the system, capture the missing procedure, never blame
@@ -179,8 +179,8 @@ principles:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from common.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
   - id: P7
     name: Record who proposed a decision separately from who cares about it
     statement: |
@@ -198,8 +198,8 @@ principles:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from common.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
   - id: P8
     name: A review surface costlier than the reviewer's budget produces false assent
     statement: |
@@ -220,8 +220,8 @@ principles:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from common.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
 rules:
   - id: R1
     name: Verify a recalled reference against current state before acting

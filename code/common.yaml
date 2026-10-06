@@ -205,8 +205,8 @@ principles:
         date: '2026-09-30T03:34:32.655Z'
         note: Imported from common.yaml
         by:
-          name: Shaun Mitchell
-          email: shaun@shitchell.com
+          name: Claude Opus 5
+          email: noreply@anthropic.com
 heuristics:
   - id: CH1
     name: Dependency adoption threshold
