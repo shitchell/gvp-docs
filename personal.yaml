@@ -646,6 +646,25 @@ heuristics:
         by:
           name: Claude Opus 5
           email: noreply@anthropic.com
+  - id: H10
+    name: YMGNI — buy cheap flexibility for plausible needs
+    statement: |
+      When a future change is plausible, not only identified, compare the effort of building the flexibility to absorb it now against the effort of retrofitting it later, in any honest effort metric (tokens, lines of code, files touched, records to migrate, callers to change). Build the flexibility now when it is small in absolute terms and clearly smaller than the retrofit, weighting most heavily the retrofit costs that grow over time: persisted formats, public interfaces, and anything others already depend on. Never implement the anticipated feature itself early (P1); defer with no flex point when the need is purely speculative (CH2).
+    tags:
+      - maintainability
+      - composability
+    maps_to:
+      - personal:V7
+      - personal:P21
+      - personal:H3
+      - personal:P1
+    origin:
+      - id: 0f4da7ed-26da-4d0b-8621-79333ded22db
+        date: '2026-11-23T11:06:44.631Z'
+        note: 'Imported from 2026-11-23-ymgni.yaml. Drafted by Claude from Shaun''s words ("YMGNI (you might gonna need it)"); cost wording revised on his review; approved: "oh! yeah, it''s good :)"'
+        by:
+          name: Claude Opus 5.5
+          email: noreply@anthropic.com
 rules:
   - id: R1
     name: Verify before claiming correctness
